@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Science Gear",
@@ -22,5 +22,8 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "node-fetch": "^3.2.6"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

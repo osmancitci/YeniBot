@@ -669,7 +669,7 @@ h2 {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Science Gear</div>
+		<div class="tooltip">Made with ❤️ By WraithsDev</div>
 	  </div>
 
 <script>
