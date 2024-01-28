@@ -8,14 +8,14 @@ const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
 
-console.log("Loading commands...");
+console.log("Komutlar Yükleniyor...");
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   commands.push(command.data.toJSON());
 
   // Print a fancy message for each loaded command
-  console.log(`✅ Loaded command: ${command.data.name}`);
+  console.log(`✅ Komut Yüklendi: ${command.data.name}`);
 }
 
 const rest = new REST({ version: "9" }).setToken(process.env.token || token);
@@ -27,14 +27,14 @@ const rest = new REST({ version: "9" }).setToken(process.env.token || token);
       await rest.put(Routes.applicationCommands(clientId), {
         body: commands,
       });
-      console.log("\n✅ Successfully registered global application commands.");
+      console.log("\n✅ Komutlar yüklendi tekrardan.");
     } else {
       // Deploy commands to a specific guild
       await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
   body: commands,
 });
 
-      console.log("\n✅ Successfully registered guild-specific application commands.");
+      console.log("\n✅ Başaralı Komutlar Sorunsuz Yüklendi ve Bot Aktif.");
     }
   } catch (error) {
     console.error(error);

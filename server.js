@@ -1495,7 +1495,7 @@ background-color: #0056b3;
   
   <div class="floating-heart">
       <i class="fas fa-heart"></i>
-      <div class="tooltip">Made with ❤️ By Science Gear</div>
+      <div class="tooltip">Made with ❤️ By WraithsDev</div>
       </div>
   
   <script>
@@ -2197,7 +2197,7 @@ background-color: #0056b3;
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Science Gear</div>
+		<div class="tooltip">Made with ❤️ By WraithsDev</div>
 	  </div>
 
 <script>
@@ -2574,7 +2574,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Science Gear</div>
+		<div class="tooltip">Made with ❤️ By WraithsDev</div>
 	  </div>
 
 <script>
@@ -2758,7 +2758,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Science Gear</div>
+		<div class="tooltip">Made with ❤️ By WraithsDev</div>
 	  </div>
 
 <script>
@@ -2790,5 +2790,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Start the server
 app.listen(config.port, () => {
-  console.log(`Server started on port ${config.port}`);
+  console.log(`Server Başlatıldı Porta Giriş Yaptım: ${config.port}`);
 });

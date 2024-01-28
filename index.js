@@ -20,8 +20,8 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity(`${config.status}`, { type: "WATCHING" }); // Set the bot's activity status
+  console.log(`Bota Giriş Yaptım: ${client.user.tag}!`);
+  client.user.setActivity(`Altyapı videosu için youtube.com/@WraithsDev`, { type: "WATCHING" }); // Set the bot's activity status
     /* You can change the activity type to:
      * LISTENING
      * WATCHING
