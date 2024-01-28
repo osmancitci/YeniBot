@@ -1,0 +1,27 @@
+{
+  "token": "",
+  "username": "admin",
+  "password": "admin123",
+  "port": "3000",
+  "clientId": "1200902861098336408",
+  "guildId": "1107600172940275722",
+  "globalDeploy": false,
+  "status": "Made By WraithsDev",
+  "website": "https://youtube.com/@WraithsDev",
+  "banner": "https://media.discordapp.net/attachments/960440723369517106/996423763522506782/rainbow-border.gif",
+  "footer": "Made By WraithsDev",
+  "genChannel": "1200901477993025648",
+  "premiumChannel": "1200901493717471322",
+  "genCooldown": "5",
+  "premiumCooldown": "3",
+  "color": {
+    "green": "0x57F287",
+    "yellow": "0xFEE75C",
+    "red": "0xED4245",
+    "default": "0x5865F2"
+  },
+  "command": {
+    "notfound_message": true,
+    "error_message": true
+  }
+}
