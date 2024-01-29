@@ -36,8 +36,8 @@ module.exports = {
 		if (!interaction.member.permissions.has('MANAGE_CHANNELS')) {
 			const errorEmbed = new MessageEmbed()
 				.setColor(config.color.red)
-				.setTitle('You Don\'t Have Permissions!')
-				.setDescription('🛑 Only Admin Can Do It HEHE')
+				.setTitle('İzniniz Yok!')
+				.setDescription('🛑 Sadece Yönetici Yapabilir HEHE')
 				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
 				.setTimestamp();
 			return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
@@ -46,8 +46,8 @@ module.exports = {
 		if (!service || !account || (type !== 'free' && type !== 'premium')) {
 			const missingParamsEmbed = new MessageEmbed()
 				.setColor(config.color.red)
-				.setTitle('Missing parameters or invalid type!')
-				.setDescription('You need to specify a service, an account, and a valid type (free or premium)!')
+				.setTitle('Eksik parametreler veya geçersiz tür!')
+				.setDescription('Bir hizmet, bir hesap ve geçerli bir tür (ücretsiz veya premium) belirtmeniz gerekiyor!')
 				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
 				.setTimestamp();
 			return interaction.reply({ embeds: [missingParamsEmbed], ephemeral: true });
@@ -63,13 +63,13 @@ module.exports = {
 		fs.appendFile(filePath, `${os.EOL}${account}`, function (error) {
 			if (error) {
 				log.error(error);
-				return interaction.reply('An error occurred while adding the account.');
+				return interaction.reply('Hesap eklenirken bir hata oluştu.');
 			}
 
 			const successEmbed = new MessageEmbed()
 				.setColor(config.color.green)
-				.setTitle('Account added!')
-				.setDescription(`Successfully added \`${account}\` account to \`${service}\` service **${type}**.`)
+				.setTitle('Hesap Eklendi!')
+				.setDescription(`\`${account}\` hesabı \`${service}\` hizmetine **${type}** başarıyla eklendi.`)
 				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL())
 				.setTimestamp();
 

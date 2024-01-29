@@ -8,6 +8,8 @@ const generated = new Set();
 const server = require('./server.js');
 const commands = require('./deploy-commands.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+// Maded by @sanalmuz
+// Maded by @sanalmuz
 
 client.commands = new Collection();
 const commandFiles = fs
@@ -19,9 +21,11 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
+// Maded by @sanalmuz
+
 client.once('ready', () => {
   console.log(`Bota Giriş Yaptım: ${client.user.tag}!`);
-  client.user.setActivity(`Altyapı videosu için youtube.com/@WraithsDev`, { type: "WATCHING" }); // Set the bot's activity status
+  client.user.setActivity(`Youtube : @sanalmuz`, { type: "WATCHING" }); // Set the bot's activity status
     /* You can change the activity type to:
      * LISTENING
      * WATCHING
@@ -30,6 +34,8 @@ client.once('ready', () => {
      * PLAYING (default)
     */
 });
+
+// Maded by @sanalmuz
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
@@ -47,3 +53,4 @@ client.on("interactionCreate", async (interaction) => {
 
 client.login(process.env.token || token);
 
+// Maded by @sanalmuz

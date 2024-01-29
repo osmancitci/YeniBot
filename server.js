@@ -1,3 +1,5 @@
+// Maded by @sanalmuz
+
 const config = require('./config.json');
 const path = require('path'); // Import the path module
 const express = require('express');
@@ -669,7 +671,7 @@ h2 {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By WraithsDev</div>
+		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
 	  </div>
 
 <script>
@@ -1495,7 +1497,7 @@ background-color: #0056b3;
   
   <div class="floating-heart">
       <i class="fas fa-heart"></i>
-      <div class="tooltip">Made with ❤️ By WraithsDev</div>
+      <div class="tooltip">Made with ❤️ By Sanal Muz</div>
       </div>
   
   <script>
@@ -2197,7 +2199,7 @@ background-color: #0056b3;
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By WraithsDev</div>
+		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
 	  </div>
 
 <script>
@@ -2574,7 +2576,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By WraithsDev</div>
+		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
 	  </div>
 
 <script>
@@ -2758,7 +2760,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By WraithsDev</div>
+		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
 	  </div>
 
 <script>
