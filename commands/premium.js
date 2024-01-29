@@ -9,11 +9,11 @@ const generated = new Set();
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('premium')
-        .setDescription('Generate a specified service if stocked')
+        .setName('ozel')
+        .setDescription('Stok varsa belirli bir hizmet oluşturun')
         .addStringOption(option =>
             option.setName('service')
-                .setDescription('The name of the service to generate')
+                .setDescription('Oluşturulacak hizmetin adı')
                 .setRequired(true)),
 
     async execute(interaction) {
@@ -24,8 +24,8 @@ module.exports = {
         if (interaction.channelId !== config.premiumChannel) {
             const wrongChannelEmbed = new MessageEmbed()
                 .setColor(config.color.red)
-                .setTitle('Wrong command usage!')
-                .setDescription(`You cannot use the \`/premium\` command in this channel! Try it in <#${config.premiumChannel}>!`)
+                .setTitle('Yanlış komut kullanımı!')
+                .setDescription(`Bu kanalda \`/ozel\` komutunu kullanamazsınız! <#${config.premiumChannel}>'da deneyin!`)
                 .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
                 .setTimestamp();
 
@@ -36,8 +36,8 @@ module.exports = {
         if (generated.has(member.id)) {
             const cooldownEmbed = new MessageEmbed()
                 .setColor(config.color.red)
-                .setTitle('Cooldown!')
-                .setDescription(`Please wait **${config.premiumCooldown}** seconds before executing that command again!`)
+                .setTitle('Sakin ol!')
+                .setDescription(`Bu komutu tekrar çalıştırmadan önce lütfen **${config.premiumCooldown}** saniye bekleyin!`)
                 .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
                 .setTimestamp();
 
@@ -52,8 +52,8 @@ module.exports = {
             if (error) {
                 const notFoundEmbed = new MessageEmbed()
                     .setColor(config.color.red)
-                    .setTitle('Generator error!')
-                    .setDescription(`Service \`${service}\` does not exist!`)
+                    .setTitle('Jeneratör Hatası!')
+                    .setDescription(`\`${service}\` hizmeti mevcut değil!`)
                     .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
                     .setTimestamp();
 
@@ -65,8 +65,8 @@ module.exports = {
             if (lines.length <= 1) {
                 const emptyServiceEmbed = new MessageEmbed()
                     .setColor(config.color.red)
-                    .setTitle('Generator error!')
-                    .setDescription(`The \`${service}\` service is empty!`)
+                    .setTitle('Jeneratör Hatası!')
+                    .setDescription(`\`${service}\` hizmeti boş!`)
                     .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
                     .setTimestamp();
 
@@ -83,23 +83,23 @@ module.exports = {
             fs.writeFile(filePath, updatedData, (writeError) => {
                 if (writeError) {
                     log.error(writeError);
-                    return interaction.reply('An error occurred while redeeming the account.');
+                    return interaction.reply('Hesabı kullanırken bir hata oluştu.');
                 }
 
                 const embedMessage = new MessageEmbed()
                     .setColor(config.color.green)
-                    .setTitle('Generated Premium account')
+                    .setTitle('Özel hesap oluşturuldu')
                     .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
-                    .setDescription('🙏 Thank you so much for being a premium member! \n 🌟 Your support means the world to us! 💖😊')
-                    .addField('Service', `\`\`\`${service[0].toUpperCase()}${service.slice(1).toLowerCase()}\`\`\``, true)
-                    .addField('Account', `\`\`\`${generatedAccount}\`\`\``, true)
+                    .setDescription('🙏 Özel üye olduğunuz için çok teşekkür ederiz! \n 🌟 Desteğiniz bizim için dünyalara bedel! 💖😊')
+                    .addField('Servis', `\`\`\`${service[0].toUpperCase()}${service.slice(1).toLowerCase()}\`\`\``, true)
+                    .addField('Hesap', `\`\`\`${generatedAccount}\`\`\``, true)
                     .setImage(config.banner)
                     .setTimestamp();
 
                 member.send({ embeds: [embedMessage] })
-                    .catch(error => console.error(`Error sending embed message: ${error}`));
+                    .catch(error => console.error(`Yerleştirme mesajı gönderilirken hata oluştu: ${error}`));
                 interaction.reply({
-                    content: `**Check your DM ${member}!** __If you do not receive the message, please unlock your private!__`,
+                    content: `**DM ${member} numaranızı kontrol edin!** __Mesajı almazsanız, lütfen özel hesabınızın kilidini açın!__`,
                 });
 
                 generated.add(member.id);

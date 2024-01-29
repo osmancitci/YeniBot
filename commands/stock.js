@@ -5,31 +5,31 @@ const config = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('stock')
-		.setDescription('Display the service stock.'),
+		.setName('stok')
+		.setDescription('Hizmet stokunu görüntüleyin. Maded by @sanalmuz'),
 
 	async execute(interaction) {
-		const freeStock = await getStock(`${__dirname}/../free/`);
-		const premiumStock = await getStock(`${__dirname}/../premium/`);
+		const freeStock = await getStock(`${__dirname}/../bedava/`);
+		const premiumStock = await getStock(`${__dirname}/../ozel/`);
 
 		const embed = new MessageEmbed()
 			.setColor(config.color.default)
-			.setTitle(`${interaction.guild.name} Service Stock`)
-			.setDescription(`👋 Hello and welcome to **${interaction.guild.name}**! 🌟 We are here to provide you with the best services. 🚀`)
+			.setTitle(`${interaction.guild.name} Hizmet Stoku`)
+			.setDescription(`👋 Merhaba ve **${interaction.guild.name}**'e hoş geldiniz! 🌟Size en iyi hizmeti sunmak için buradayız. 🚀`)
 			.setFooter(config.footer)
 			.setImage(config.banner);
 
 		if (freeStock.length > 0) {
 			const freeStockInfo = await getServiceInfo(`${__dirname}/../free/`, freeStock);
-			embed.addField('Free Services', freeStockInfo, true);
+			embed.addField('Bedava Servisler;', freeStockInfo, true);
 		}
 
 		if (premiumStock.length > 0) {
 			const premiumStockInfo = await getServiceInfo(`${__dirname}/../premium/`, premiumStock);
-			embed.addField('Premium Services', premiumStockInfo, true);
+			embed.addField('Özel Servisler;', premiumStockInfo, true);
 		}
 
-		embed.addField('Useful Links', `[**Website**](${config.website}) [**Discord**](https://dsc.gg/sciencegear)`);
+		embed.addField('Faydalı Bağlantılar', `[**Web Sitesi**](${config.website}) [**Discord**](https://discord.gg/gqDnqmCGrx)`);
 
 		interaction.reply({ embeds: [embed] });
 	},
@@ -42,7 +42,7 @@ async function getStock(directory) {
 		const stock = files.filter(file => file.endsWith('.txt'));
 		return stock;
 	} catch (err) {
-		console.error('Unable to scan directory: ' + err);
+		console.error('Dizin taranamıyor: ' + err);
 		return [];
 	}
 }

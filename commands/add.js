@@ -9,11 +9,11 @@ const log = new CatLoggr();
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('add')
-		.setDescription('Add an account to a service.')
+		.setName('ekle')
+		.setDescription('Bir hizmete hesap ekleyin.')
 		.addStringOption(option =>
 			option.setName('type')
-				.setDescription('The type of service (free or premium)')
+				.setDescription('Hizmet türü (ücretsiz veya premium)')
 				.setRequired(true)
 				.addChoices(
 					{ name: 'Free', value: 'free' },
@@ -21,11 +21,11 @@ module.exports = {
 				))
 		.addStringOption(option =>
 			option.setName('service')
-				.setDescription('The service to add the account to')
+				.setDescription('Hesabın ekleneceği hizmet')
 				.setRequired(true))
 		.addStringOption(option =>
 			option.setName('account')
-				.setDescription('The account to add')
+				.setDescription('Eklenecek hesap')
 				.setRequired(true)),
 
 	async execute(interaction) {

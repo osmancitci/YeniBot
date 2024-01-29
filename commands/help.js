@@ -5,25 +5,25 @@ const stock = require('./stock');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('Display the command list.'),
+		.setName('yardim')
+		.setDescription('Komut listesini görüntüleyin. / Maded by @sanalmuz'),
 
 	async execute(interaction) {
 		const { commands } = interaction.client;
 
 		const commandListEmbed = new MessageEmbed()
 			.setColor(config.color.default)
-			.setTitle('Help Panel')
-			.setDescription(`👋 Hello and welcome to **${interaction.guild.name}**! 🌟 We are here to provide you with the best services. 🚀`)
+			.setTitle('Yardım Paneli')
+			.setDescription(`👋 Merhaba ve **${interaction.guild.name}**'e hoş geldiniz! 🌟Size en iyi hizmeti sunmak için buradayız. 🚀`)
 			.setImage(config.banner)
 			.setThumbnail(interaction.client.user.displayAvatarURL({ dynamic: true, size: 64 })) // Set the bot's avatar as the thumbnail
 			.addFields({
-				name: `Commands`,
-				value: "`/help`   **Displays the help command**\n`/create` **Create a new service**\n`/free`   **Generate a reward**\n`/add`    **Add a reward to the stock**\n`/stock`  **View the current stock**\n`/premium` **Generate premium reward**"
+				name: `Komutlar`,
+				value: "`/yardim` **Yardım komutunu görüntüler**\n`/olustur` **Yeni bir hizmet oluşturun**\n`/bedava` **Ödül oluşturun**\n`/ekle` **Ödül ekleyin hisse senedine git**\n`/stok` **Mevcut hisse senedini görüntüle**\n`/ozel` **Özel ödülü oluştur**"
 			})
 			.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
 			.setTimestamp()
-			.addField('Useful Links', `[**Website**](${config.website}) [**Discord**](https://dsc.gg/sciencegear)`);
+			.addField('Faydalı Bağlantılar', `[**Web Sitesi**](${config.website}) [**Discord**](https://discord.gg/gqDnqmCGrx)`);
 
 		await interaction.reply({ embeds: [commandListEmbed] });
 	},
