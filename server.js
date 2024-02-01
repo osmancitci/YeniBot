@@ -87,11 +87,11 @@ app.get('/edit', requireLogin, (req, res) => {
   // Fetch the list of files and populate the select options
   fs.readdir('free', (err, stockFiles) => {
     if (err) {
-      res.send(`Error reading directory: ${err}`);
+      res.send(`Dizin Okunurken Hata Oluştu: ${err}`);
     } else {
       fs.readdir('premium', (err, pstockFiles) => {
         if (err) {
-          res.send(`Error reading directory: ${err}`);
+          res.send(`Dizin Okunurken Hata Oluştu: ${err}`);
         } else {
           const stockFileLinks = stockFiles.map((file) => {
             return `<div class="file-item">
@@ -119,7 +119,7 @@ app.get('/edit', requireLogin, (req, res) => {
           res.send(`
           <html>
           <head>
-          <title>Giftmaster Dashboard</title>
+          <title>Hediye Üretici</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
           <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/css/ionicons.min.css">
@@ -487,7 +487,7 @@ h2 {
                           <span class="icon">
                           <ion-icon name="gift-sharp"></ion-icon>
                           </span>
-                          <span class="title">Gift Master</span>
+                          <span class="title">Hediye Üretici</span>
                       </a>
                   </li>
   
@@ -496,7 +496,7 @@ h2 {
                           <span class="icon">
                               <ion-icon name="home-outline"></ion-icon>
                           </span>
-                          <span class="title">Dashboard</span>
+                          <span class="title">Anasayfa</span>
                       </a>
                   </li>
   
@@ -507,7 +507,7 @@ h2 {
                           <span class="icon">
                               <ion-icon name="help-outline"></ion-icon>
                           </span>
-                          <span class="title">Help</span>
+                          <span class="title">Yardım</span>
                       </a>
                   </li>
   
@@ -516,7 +516,7 @@ h2 {
                           <span class="icon">
                               <ion-icon name="settings-outline"></ion-icon>
                           </span>
-                          <span class="title">Settings</span>
+                          <span class="title">Ayarlar</span>
                       </a>
                   </li>
   
@@ -525,7 +525,7 @@ h2 {
                           <span class="icon">
                               <ion-icon name="log-out-outline"></ion-icon>
                           </span>
-                          <span class="title">Sign Out</span>
+                          <span class="title">Çıkış</span>
                       </a>
                   </li>
               </ul>
@@ -542,7 +542,7 @@ h2 {
                 <div class="card">
                     <div>
                     <div class="numbers">${freeLines + premiumLines}</div>
-                        <div class="cardName">Total Stock</div>
+                        <div class="cardName">Toplam Hesap</div>
                     </div>
 
                     <div class="iconBx">
@@ -553,7 +553,7 @@ h2 {
                 <div class="card">
                     <div>
                         <div class="numbers">${freeLines}</div>
-                        <div class="cardName">Free</div>
+                        <div class="cardName">Bedava</div>
                     </div>
 
                     <div class="iconBx">
@@ -574,21 +574,21 @@ h2 {
             </div>
   
             <div class="button-container">
-  <button class="button" onclick="toggleCreateForm()">Create</button>
+  <button class="button" onclick="toggleCreateForm()">Oluştur</button>
   <div class="popup-container" id="create-form-container">
   <form id="create-form" action="/create" method="post">
-    <h2 class="popup-title">Create File</h2>
+    <h2 class="popup-title">Dosya Oluştur</h2>
     <div class="fancy-input-container">
       <div class="file-select">
         <select id="create-folder-select" name="folder" required>
-          <option value="free">Stock</option>
-          <option value="premium">Pstock</option>
+          <option value="free">Ücretsiz Hesap</option>
+          <option value="premium">Premium Hesap</option>
         </select>
       </div>
       <div class="fancy-input">
-        <input id="create-file-name" type="text" name="fileName" placeholder="File Name" required>
+        <input id="create-file-name" type="text" name="fileName" placeholder="Dosya Adı" required>
       </div>
-      <button class="fancy-button" type="button" onclick="createFile()">Create</button>
+      <button class="fancy-button" type="button" onclick="createFile()">Oluştur</button>
     </div>
   </form>
     </div>
@@ -614,9 +614,9 @@ h2 {
 <div id="renameModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeRenameModal()">&times;</span>
-    <h2>Rename File</h2>
-    <input type="text" id="newFileName" placeholder="New File Name">
-    <button id="renameButton">Rename</button>
+    <h2>İsim Değiştir</h2>
+    <input type="text" id="newFileName" placeholder="Yeni Dosya Adı">
+    <button id="renameButton">Değiştir</button>
   </div>
 </div>
 
@@ -671,7 +671,7 @@ h2 {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
+		<div class="tooltip">Made with ❤️ By Kalkan</div>
 	  </div>
 
 <script>
@@ -772,7 +772,7 @@ toggle.onclick = function () {
                   location.reload();
                 })
                 .catch(error => {
-                  console.error('Error:', error);
+                  console.error('Hata :', error);
                 });
             }            
           
@@ -828,7 +828,7 @@ function confirmRenameFile(folder, fileName) {
         location.reload();
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error('Hata :', error);
       });
     closeRenameModal(); // Close the modal after renaming
   }
@@ -836,7 +836,7 @@ function confirmRenameFile(folder, fileName) {
 
 
               function renameFile(folder, fileName) {
-                const newName = prompt('Enter the new name for the file:');
+                const newName = prompt('Dosyanın Yeni Adını Girin:');
                 if (newName !== null) {
                   // Send an AJAX request to the server to rename the file
                   fetch('/rename', {
@@ -857,7 +857,7 @@ function confirmRenameFile(folder, fileName) {
                       location.reload();
                     })
                     .catch(error => {
-                      console.error('Error:', error);
+                      console.error('Hata :', error);
                     });
                 }
               }
@@ -881,7 +881,7 @@ function confirmRenameFile(folder, fileName) {
                     location.reload();
                   })
                   .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Hata :', error);
                   });
               }
             </script>
@@ -2044,7 +2044,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="home-outline"></ion-icon>
                   </span>
-                  <span class="title">Dashboard</span>
+                  <span class="title">Anasayfa</span>
               </a>
           </li>
 
@@ -2055,7 +2055,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="help-outline"></ion-icon>
                   </span>
-                  <span class="title">Help</span>
+                  <span class="title">Yardım</span>
               </a>
           </li>
 
@@ -2064,7 +2064,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="settings-outline"></ion-icon>
                   </span>
-                  <span class="title">Settings</span>
+                  <span class="title">Ayarlar</span>
               </a>
           </li>
 
@@ -2073,7 +2073,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="log-out-outline"></ion-icon>
                   </span>
-                  <span class="title">Sign Out</span>
+                  <span class="title">Çıkış</span>
               </a>
           </li>
       </ul>
@@ -2090,7 +2090,7 @@ background-color: #0056b3;
         <div class="card">
             <div>
             <div class="numbers">${freeLines + premiumLines}</div>
-                <div class="cardName">Total Stock</div>
+                <div class="cardName">Toplam Hesap</div>
             </div>
 
             <div class="iconBx">
@@ -2101,7 +2101,7 @@ background-color: #0056b3;
         <div class="card">
             <div>
                 <div class="numbers">${freeLines}</div>
-                <div class="cardName">Free</div>
+                <div class="cardName">Bedava</div>
             </div>
 
             <div class="iconBx">
@@ -2123,25 +2123,25 @@ background-color: #0056b3;
 
     <div class="settings-container">
     <form id="settings-form">
-        <label for="status">Status:</label>
+        <label for="status">Durum:</label>
         <input type="text" id="status" name="status" value="${config.status}"><br><br>
 
-        <label for="genCooldown">General Cooldown: (seconds)</label>
+        <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
         <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>
 
-        <label for="premiumCooldown">Premium Cooldown: (seconds)</label>
+        <label for="premiumCooldown">Premium Bekleme Süresi: (Saniye)</label>
         <input type="text" id="premiumCooldown" name="premiumCooldown" value="${config.premiumCooldown}"><br><br>
 
-        <label for="website">Website:</label>
+        <label for="website">Web Site:</label>
         <input type="text" id="website" name="website" value="${config.website}"><br><br>
 
-        <label for="banner">Banner:</label>
+        <label for="banner">Afiş:</label>
         <input type="text" id="banner" name="banner" value="${config.banner}"><br><br>
 
-        <label for="footer">Footer:</label>
+        <label for="footer">Alt Bilgi:</label>
         <input type="text" id="footer" name="footer" value="${config.footer}"><br><br>
 
-        <input type="submit" value="Save Settings">
+        <input type="submit" value="Kaydet">
     </form>
 </div>
   </div>
@@ -2199,7 +2199,7 @@ background-color: #0056b3;
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
+		<div class="tooltip">Made with ❤️ By Kalkan</div>
 	  </div>
 
 <script>
@@ -2245,9 +2245,9 @@ settingsForm.addEventListener("submit", async (event) => {
   });
 
   if (response.ok) {
-    alert("Settings saved successfully!");
+    alert("Ayarlar Kaydedildi..");
   } else {
-    alert("Failed to save settings.");
+    alert("Ayarlar Kaydedilemedi..");
   }
 });
 
@@ -2296,9 +2296,9 @@ app.post("/save-settings", requireLogin, (req, res) => {
   // Read the current contents of config.json
   fs.readFile('./config.json', 'utf8', (err, data) => {
     if (err) {
-      console.error("Error reading config file:", err);
+      console.error("Config Dosyası Okunurken Hata Oluştu:", err);
       res.status(500).json({
-        error: "Failed to read config file"
+        error: "Config Dosyası Okunamadı."
       });
       return;
     }
@@ -2311,9 +2311,9 @@ app.post("/save-settings", requireLogin, (req, res) => {
     // Write the updated config object back to config.json
     fs.writeFile('./config.json', JSON.stringify(config, null, 2), (err) => {
       if (err) {
-        console.error("Error writing config file:", err);
+        console.error("Config Yazılırken Hata Oluştu:", err);
         res.status(500).json({
-          error: "Failed to save settings"
+          error: "Ayarlar Kaydedilemedi."
         });
         return;
       }
@@ -2347,13 +2347,13 @@ app.post('/create', requireLogin, (req, res) => {
     // Create the file in the selected folder
     fs.writeFile(`${folder}/${fullFileName}`, '', (err) => {
       if (err) {
-        res.send(`Error creating file: ${err}`);
+        res.send(`Dosya Oluşturulurken Hata Oluştu: ${err}`);
       } else {
-        res.send('File created successfully');
+        res.send('Dosya Oluşturuldu.');
       }
     });
   } else {
-    res.send('Invalid folder selection');
+    res.send('Geçersiz Dosya Dizini.');
   }
 });
 
@@ -2374,9 +2374,9 @@ app.post('/rename', requireLogin, (req, res) => {
 
   fs.rename(oldFilePath, newFilePath, (err) => {
     if (err) {
-      res.status(500).send(`Error renaming file: ${err}`);
+      res.status(500).send(`Dosya Yeniden Adlandırılırken Hata Oluştu: ${err}`);
     } else {
-      res.send('File renamed successfully');
+      res.send('Dosya Başarıyla Yeniden Adlandırıldı.');
     }
   });
 });
@@ -2390,9 +2390,9 @@ app.post('/delete', requireLogin, (req, res) => {
 
   fs.unlink(filePath, (err) => {
     if (err) {
-      res.status(500).send(`Error deleting file: ${err}`);
+      res.status(500).send(`Dosya Silinirken Hata Oluştu: ${err}`);
     } else {
-      res.send('File deleted successfully');
+      res.send('Dosya Silindi');
     }
   });
 });
@@ -2407,7 +2407,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
   // Read the content of the selected file
   fs.readFile(filePath, 'utf-8', (err, content) => {
     if (err) {
-      res.send(`Error reading file: ${err}`);
+      res.send(`Dosya Okunurken Hata Oluştu: ${err}`);
     } else {
       res.send(`
         <!DOCTYPE html>
@@ -2576,7 +2576,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
+		<div class="tooltip">Made with ❤️ By Kalkan</div>
 	  </div>
 
 <script>
@@ -2617,7 +2617,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
   // Save the file
   fs.writeFile(filePath, content, (err) => {
     if (err) {
-      res.send(`Error saving file: ${err}`);
+      res.send(`Dosya Kaydedilirken Hata Oluştu: ${err}`);
     } else {
       res.send(`
           <html>
@@ -2760,7 +2760,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
 
 <div class="floating-heart">
 		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Sanal Muz</div>
+		<div class="tooltip">Made with ❤️ By Kalkan</div>
 	  </div>
 
 <script>
