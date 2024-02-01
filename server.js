@@ -902,7 +902,7 @@ app.get('/help', requireLogin, (req, res) => {
   // Fetch the list of files and populate the select options
   const helpContent = `<html>
   <head>
-  <title>Giftmaster Dashboard -help</title>
+  <title>Hediye Üreticisi - Yardım</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/css/ionicons.min.css">
@@ -1560,7 +1560,7 @@ app.get('/settings', requireLogin, (req, res) => {
   // Create the content for your settings page here
   const settingsContent = `<html>
   <head>
-  <title>Giftmaster Dashboard -settings</title>
+  <title>Hediye Üreticisi</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/css/ionicons.min.css">
@@ -2035,7 +2035,7 @@ background-color: #0056b3;
                   <span class="icon">
                   <ion-icon name="gift-sharp"></ion-icon>
                   </span>
-                  <span class="title">Gift Master</span>
+                  <span class="title">Hediye Üreticisi</span>
               </a>
           </li>
 
@@ -2121,7 +2121,7 @@ background-color: #0056b3;
         </div>
     </div>
 
-    <div class="settings-container">
+  
     <form id="settings-form">
         <label for="status">Durum:</label>
         <input type="text" id="status" name="status" value="${config.status}"><br><br>
@@ -2143,7 +2143,7 @@ background-color: #0056b3;
 
         <input type="submit" value="Kaydet">
     </form>
-</div>
+
   </div>
 </div>
 
@@ -2413,7 +2413,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
         <!DOCTYPE html>
 <html>
 <head>
-<title>Giftmaster Editor</title>
+<title>Hediye Üreticisi</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -2513,15 +2513,15 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
 </head>
 <body>
     <div class="navbar">
-        <button onclick="history.back()"><i class="fas fa-arrow-left"></i>Back</button>
-        <h1><i class="fas fa-file"></i>Edit File: ${folder}/${filename}</h1>
+        <button onclick="history.back()"><i class="fas fa-arrow-left"></i>Geri</button>
+        <h1><i class="fas fa-file"></i>Dosya Düzenle: ${folder}/${filename}</h1>
         <i class="fas fa-moon"></i>
     </div>
     <div class="container">
         <div class="editor">
             <form action="/save/${folder}/${filename}" method="post">
-                <textarea name="content" placeholder="File Content" required>${content}</textarea>
-                <button type="submit">Save</button>
+                <textarea name="content" placeholder="Hesap İçeriği" required>${content}</textarea>
+                <button type="submit">Kaydet</button>
             </form>
         </div>
     </div>
@@ -2622,7 +2622,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
       res.send(`
           <html>
           <head>
-          <title>Saved</title>
+          <title>Hediye Üreticisi</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
           <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -2706,8 +2706,8 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
           <body>
             <div class="popup">
               <i class="fas fa-check-circle popup-icon"></i>
-              <h1 class="popup-message">File "${folder}/${filename}" saved successfully</h1>
-              <a href="/edit" class="popup-button">Back to Editor</a>
+              <h1 class="popup-message">"${folder}/${filename}" Dosya Oluşturuldu.</h1>
+              <a href="/edit" class="popup-button">Geri Dön</a>
             </div>
             <style>
 /* Add the heart icon and tooltip styles */
