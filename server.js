@@ -98,9 +98,9 @@ app.get('/edit', requireLogin, (req, res) => {
               <span class="file-icon"><i class="fa fa-file-text-o"></i></span>
               <a href="/edit/free/${file}" class="file-name">${file}</a>
               <div class="file-actions">
-              <button class="rename-button" data-folder="free" data-file="${file}" onclick="openRenameModal(this)">Rename</button>
+              <button class="rename-button" data-folder="free" data-file="${file}" onclick="openRenameModal(this)">Değiştir</button>
 
-                <button class="delete-button" onclick="deleteFile('free', '${file}')">Delete</button>
+                <button class="delete-button" onclick="deleteFile('free', '${file}')">Sil</button>
               </div>
             </div>`;
           }).join('');
@@ -110,8 +110,8 @@ app.get('/edit', requireLogin, (req, res) => {
               <span class="file-icon"><i class="fa fa-file-text-o"></i></span>
               <a href="/edit/premium/${file}" class="file-name">${file}</a>
               <div class="file-actions">
-              <button class="rename-button" data-folder="premium" data-file="${file}" onclick="openRenameModal(this)">Rename</button>
-                <button class="delete-button" onclick="deleteFile('premium', '${file}')">Delete</button>
+              <button class="rename-button" data-folder="premium" data-file="${file}" onclick="openRenameModal(this)">Değiştir</button>
+                <button class="delete-button" onclick="deleteFile('premium', '${file}')">Sil</button>
               </div>
             </div>`;
           }).join('');
@@ -595,14 +595,14 @@ h2 {
   </div>
           
             <div class="files-section">
-      <h2 class="section-title">Free Stock Files</h2>
+      <h2 class="section-title">Ücretsiz Hesaplar</h2>
       <ul class="file-list" id="stock-files">
               ${stockFileLinks}
               </ul>
               </div>
           
               <div class="files-section">
-      <h2 class="section-title">Premium Stock Files</h2>
+      <h2 class="section-title">Premium Hesaplar</h2>
       <ul class="file-list" id="pstock-files">
               ${pstockFileLinks}
               </ul>
@@ -1326,7 +1326,7 @@ background-color: #0056b3;
                   <span class="icon">
                   <ion-icon name="gift-sharp"></ion-icon>
                   </span>
-                  <span class="title">Gift Master</span>
+                  <span class="title">Hediye Üreticisi</span>
               </a>
           </li>
 
@@ -1335,7 +1335,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="home-outline"></ion-icon>
                   </span>
-                  <span class="title">Dashboard</span>
+                  <span class="title">Panel</span>
               </a>
           </li>
 
@@ -1346,7 +1346,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="help-outline"></ion-icon>
                   </span>
-                  <span class="title">Help</span>
+                  <span class="title">Yardım</span>
               </a>
           </li>
 
@@ -1355,7 +1355,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="settings-outline"></ion-icon>
                   </span>
-                  <span class="title">Settings</span>
+                  <span class="title">Ayarlar</span>
               </a>
           </li>
 
@@ -1364,7 +1364,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="log-out-outline"></ion-icon>
                   </span>
-                  <span class="title">Sign Out</span>
+                  <span class="title">Çıkış</span>
               </a>
           </li>
       </ul>
@@ -1381,7 +1381,7 @@ background-color: #0056b3;
         <div class="card">
             <div>
             <div class="numbers">${freeLines + premiumLines}</div>
-                <div class="cardName">Total Stock</div>
+                <div class="cardName">Toplam Hesap</div>
             </div>
 
             <div class="iconBx">
@@ -1392,7 +1392,7 @@ background-color: #0056b3;
         <div class="card">
             <div>
                 <div class="numbers">${freeLines}</div>
-                <div class="cardName">Free</div>
+                <div class="cardName">Bedava</div>
             </div>
 
             <div class="iconBx">
@@ -1497,7 +1497,7 @@ background-color: #0056b3;
   
   <div class="floating-heart">
       <i class="fas fa-heart"></i>
-      <div class="tooltip">Made with ❤️ By Sanal Muz</div>
+      <div class="tooltip">Made with ❤️ By Kalkan</div>
       </div>
   
   <script>
