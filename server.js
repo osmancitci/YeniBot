@@ -117,6 +117,76 @@ app.get('/edit', requireLogin, (req, res) => {
           }).join('');
 
           res.send(`
+		  <style>
+.wrapper{
+    width: 380px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+}
+.toast{
+    width: 100%;
+    height: 80px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 1.3fr 6fr 0.5fr;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+.success{
+    border-left: 8px solid #47D764;
+}
+.error{
+    border-left: 8px solid #ff355b;
+}
+.info{
+    border-left: 8px solid #2F86EB;
+}
+.warning{
+    border-left: 8px solid #FFC021;
+}
+.error i{
+    color: #ff355b;
+}
+.info i{
+    color: #2F86EB;
+}
+.warning i{
+    color: #FFC021;
+}
+.toast:not(:last-child){
+    margin-bottom: 50px;
+}
+.container-1,.container-2{
+    align-self: center;
+} 
+.container-1 i{
+    font-size: 35px;
+}
+.success i{
+    color: #47D764;
+}
+.container-2 p:first-child{
+    color: #101020;
+    font-weight: 600;
+    font-size: 16px;
+}
+.container-2 p:last-child{
+    font-size: 12px;
+    font-weight: 400;
+    color: #656565;
+}
+.toast button{
+    align-self: flex-start;
+    background-color: transparent;
+    font-size: 25px;
+    color: #656565;
+    line-height: 0;
+    cursor: pointer;
+}
+</style>
           <html>
           <head>
           <title>Hediye Üretici</title>
@@ -2220,63 +2290,87 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-    <script>
-
+  <script>
     // Handle form submission
-const settingsForm = document.getElementById("settings-form");
+    const settingsForm = document.getElementById("settings-form");
+    const toastContainer = document.getElementById("toast-container");
 
-settingsForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+    settingsForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-  const formData = new FormData(settingsForm);
-  const formDataObject = {};
+      const formData = new FormData(settingsForm);
+      const formDataObject = {};
 
-  formData.forEach((value, key) => {
-    formDataObject[key] = value;
-  });
+      formData.forEach((value, key) => {
+        formDataObject[key] = value;
+      });
 
-  // Send the form data to the server for saving
-  const response = await fetch("/save-settings", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formDataObject),
-  });
+      // Send the form data to the server for saving
+      const response = await fetch("/save-settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataObject),
+      });
 
-  if (response.ok) {
-    alert("Ayarlar Kaydedildi..");
-  } else {
-    alert("Ayarlar Kaydedilemedi..");
-  }
-});
+      // Display the appropriate toast based on the response
+      if (response.ok) {
+        displayToast("Success", "Your changes are saved successfully", "success");
+      } else {
+        displayToast("Error", "An error occurred while saving changes", "error");
+      }
+    });
 
+    function displayToast(title, message, type) {
+      const toast = document.createElement("div");
+      toast.classList.add("toast", type);
 
+toast.innerHTML = `
+  <div class=\"container-1\">
+    <i class="${type === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'}"></i>
+  </div>
+  <div class="container-2">
+    <p>${title}</p>
+    <p>${message}</p>
+  </div>
+  <button onclick="this.parentElement.style.display='none'">&times;</button>
+`;
+
+      // Add the toast to the container
+      toastContainer.appendChild(toast);
+
+      // Show the toast
+      toast.style.display = "block";
+
+      // Hide the toast after 3000 milliseconds (adjust as needed)
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
 
     // add hovered class to selected list item
-let list = document.querySelectorAll(".navigation li");
+    let list = document.querySelectorAll(".navigation li");
 
-function activeLink() {
-list.forEach((item) => {
-item.classList.remove("hovered");
-});
-this.classList.add("hovered");
-}
+    function activeLink() {
+      list.forEach((item) => {
+        item.classList.remove("hovered");
+      });
+      this.classList.add("hovered");
+    }
 
-list.forEach((item) => item.addEventListener("mouseover", activeLink));
+    list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
-// Menu Toggle
-let toggle = document.querySelector(".toggle");
-let navigation = document.querySelector(".navigation");
-let main = document.querySelector(".main");
+    // Menu Toggle
+    let toggle = document.querySelector(".toggle");
+    let navigation = document.querySelector(".navigation");
+    let main = document.querySelector(".main");
 
-toggle.onclick = function () {
-navigation.classList.toggle("active");
-main.classList.toggle("active");
-};
-
-
-    </script>
+    toggle.onclick = function () {
+      navigation.classList.toggle("active");
+      main.classList.toggle("active");
+    };
+  </script>
   </body>
   </html> `;
 
@@ -2413,7 +2507,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
         <!DOCTYPE html>
 <html>
 <head>
-<title>Hediye Üreticisi</title>
+<title>Hediye Üreticisi - Dosya Düzenle</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -2622,7 +2716,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
       res.send(`
           <html>
           <head>
-          <title>Hediye Üreticisi</title>
+          <title>Hediye Üreticisi - Dosya Oluştur</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
           <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
