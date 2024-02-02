@@ -3126,7 +3126,7 @@ dosyaForm.addEventListener("submit", async (event) => {
   });
 
   // Send the form data to the server for saving
-  const response = await fetch("/save/:folder/:filename", {
+  const response = await fetch("/save/${folder}/${filename}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -3176,7 +3176,7 @@ main.classList.toggle("active");
 });
 
 
-
+app.use(bodyParser.json());
 // Handle the file saving
 app.post('/save/:folder/:filename', requireLogin, (req, res) => {
   const folder = req.params.folder;
