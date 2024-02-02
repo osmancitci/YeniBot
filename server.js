@@ -492,7 +492,7 @@ h2 {
                           <span class="icon">
                           <ion-icon name="gift-sharp"></ion-icon>
                           </span>
-                          <span class="title">Hediye Üretici</span>
+                          <span class="title">Hediye Üreticisi</span>
                       </a>
                   </li>
   
@@ -2420,8 +2420,12 @@ app.post('/delete', requireLogin, (req, res) => {
 });
 
 
+
+
 // Serve the file editor page with the selected file
 app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
+  const freeLines = countLinesInFolder('./free');
+  const premiumLines = countLinesInFolder('./premium');
   const folder = req.params.folder;
   const filename = req.params.filename;
   const filePath = `${folder}/${filename}`;
@@ -2434,54 +2438,481 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
       res.send(`
         <!DOCTYPE html>
 <html>
-<head>
-<title>Hediye Üreticisi - Dosya Düzenle</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-				    <script src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
+  <head>
+  <title>Hediye Üreticisi - Ayarlar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.discordapp.com/attachments/1149995606564151356/1153592485675798538/style.css">
+
+
+  </head>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  			    <script src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #333;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
 
-        .navbar {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
+
+  <style>
+
+
+  /* Center the form vertically */
+        .settings-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar i {
-            margin-right: 10px;
-        }
-
-        .navbar button {
-            background-color: transparent;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 60px); /* Adjusted for navbar height */
+            align-items: center;
+            height: 100vh;
         }
+
+        /* Style the form */
+        #settings-form {
+            width: 100%; /* Expand to the maximum width */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-size: 1.2rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--blue);
+        }
+
+        /* Style the submit button */
+        input[type="submit"] {
+            background-color: var(--blue);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1e177d;
+        }
+
+        .card {
+          margin-bottom: 20px; /* Add margin to the bottom of the card element */
+      }
+      
+      .settings-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 20px; /* Add margin to the top of the settings-container */
+          margin-bottom: 20px; /* Add margin to the bottom of the settings-container */
+      }
+      
+
+        /* Add media queries for responsiveness */
+        @media screen and (max-width: 600px) {
+            .settings-container {
+                padding: 0 10px;
+            }
+
+            #settings-form {
+                max-width: none;
+                width: 100%;
+            }
+        }
+
+
+
+
+  .navigation ul li a .icon ion-icon {
+    font-size: 1.7rem;
+    height: 55px;
+  }
+
+
+
+
+  /* Button Styles */
+  .button-container {
+    position: absolute;
+    top: 20px; /* Adjust the top position as needed */
+    right: 20px; /* Adjust the right position as needed */
+    text-align: center;
+  }
+  
+  .button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .button:hover {
+    background-color: #1e177d; /* Darker shade of blue on hover */
+  }
+  
+  /* Popup Styles */
+  .popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Adjust the width as needed */
+    background: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999; /* Ensure the popup is above other content */
+  }
+  
+  .popup-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .popup-container .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .popup-container .close-button:hover {
+    color: var(--blue); /* Change the color on hover */
+  }
+  
+  /* Section Title Styles */
+  .section-title {
+    font-size: 1.5rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  
+  /* File List Styles */
+  .files-section {
+    margin-top: 20px;
+    background: var(--gray);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Updated Popup Styles */
+  .popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    text-align: center;
+  }
+  
+  .popup-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--blue);
+  }
+  
+  /* File Select Dropdown Styles */
+  .file-select {
+    margin-bottom: 15px;
+  }
+  
+  .file-select select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--black2);
+    background-color: var(--white);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .file-select select:focus {
+    border-color: var(--blue);
+  }
+  
+  /* Input Field Styles */
+  .fancy-input {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .fancy-input input {
+    width: 100%;
+    padding: 10px 30px 10px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--black2);
+    background-color: var(--white);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .fancy-input input:focus {
+    border-color: var(--blue);
+  }
+  
+  /* Create Button Styles */
+  .fancy-button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .fancy-button:hover {
+    background-color: #1e177d;
+  }
+  
+  /* Updated File List Styles */
+  .file-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .file-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .file-list a {
+    text-decoration: none;
+    color: var(--blue);
+    font-size: 1rem;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .file-list li:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+  }
+  
+  .file-list a:hover {
+    color: var(--black1); /* Change text color on hover */
+  }
+  
+  /* Delete Button Styles */
+  .delete-button {
+    color: var(--red); /* Customize the delete button color */
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .delete-button:hover {
+    color: #ff0000; /* Change the color on hover */
+  }
+
+  /* Style individual file items */
+  /* Style individual file items */
+  .file-item {
+    display: flex;
+    justify-content: space-between; /* Move buttons to the right */
+    align-items: center;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease-in-out;
+    border: 2px solid transparent; /* Initially, set a transparent border */
+  }
+  
+  .file-item .file-icon {
+    margin-right: 10px;
+    font-size: 24px;
+    color: var(--blue); /* Icon color */
+  }
+  
+  .file-item .file-name {
+    text-decoration: none;
+    color: var(--blue);
+    font-size: 1rem;
+    transition: color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    flex-grow: 1; /* Allow the file name to take up available space */
+  }
+  
+  /* Add different border colors on hover for each file item */
+  .file-item:nth-child(odd):hover {
+    background-color: #f0f0f0; /* Change background color on hover for odd items */
+    border-color: var(--blue); /* Border color on hover for odd items */
+  }
+  
+  .file-item:nth-child(even):hover {
+    background-color: #f0f0f0; /* Change background color on hover for even items */
+    border-color: var(--red); /* Border color on hover for even items */
+  }
+  
+  /* Style the Rename button */
+  .rename-button {
+    background-color: var(--green); /* Change to your desired color */
+    color: var(--black1); /* Set an initial text color */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 5px; /* Add margin to separate buttons */
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .rename-button:hover {
+    background-color: #1e177d; /* Darker shade of green on hover */
+    color: var(--white); /* Change text color on hover */
+  }
+  
+  /* Style the Delete button */
+  .delete-button {
+    background-color: var(--red); /* Change to red color */
+    color: var(--black1); /* Set an initial text color */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .delete-button:hover {
+    background-color: #ff0000; /* Darker shade of red on hover */
+    color: var(--white); /* Change text color on hover */
+  }
+  
+ 
+  /* Modal styles */
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+background-color: #fff;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #ccc;
+width: 300px;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+border-radius: 5px;
+}
+
+/* Close button styles */
+.close {
+float: right;
+cursor: pointer;
+font-size: 20px;
+}
+
+.close:hover {
+color: #f00;
+}
+
+/* Rename popup header styles */
+h2 {
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+/* Input field styles */
+#newFileName {
+width: 100%;
+padding: 10px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 16px;
+}
+
+/* Rename button styles */
+#renameButton {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 4px;
+padding: 10px 20px;
+cursor: pointer;
+font-size: 16px;
+}
+
+#renameButton:hover {
+background-color: #0056b3;
+}
+
+.bot-commands {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--gray);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bot-commands h2 {
+    font-size: 1.5rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.bot-commands ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bot-commands li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.bot-commands strong {
+    color: var(--green); /* Customize the color of bot command names */
+}
 
         .editor {
             width: 90%; /* Adjusted for responsiveness */
@@ -2516,43 +2947,119 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
             font-size: 18px;
         }
 
-        .footer {
-            background-color: #222;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+  </style>
+  <body>
+  <div class="container">
+  <div class="navigation">
+      <ul>
+          <li>
+              <a href="#">
+                  <span class="icon">
+                  <ion-icon name="gift-sharp"></ion-icon>
+                  </span>
+                  <span class="title">Hediye Üreticisi</span>
+              </a>
+          </li>
 
-        .footer-text {
-            font-size: 14px;
-        }
+          <li>
+              <a href="/edit">
+                  <span class="icon">
+                      <ion-icon name="home-outline"></ion-icon>
+                  </span>
+                  <span class="title">Anasayfa</span>
+              </a>
+          </li>
 
-        .footer-link {
-            color: #4CAF50;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
 
-        .footer-link:hover {
-            color: #ff9900;
-        }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <button onclick="history.back()"><i class="fas fa-arrow-left"></i>Geri</button>
-        <h1><i class="fas fa-file"></i>Dosya Düzenle: ${folder}/${filename}</h1>
-        <i class="fas fa-moon"></i>
-    </div>
-    <div class="container">
-        <div class="editor">
-            <form action="/save/${folder}/${filename}" method="post">
-                <textarea name="content" placeholder="Hesap İçeriği" required>${content}</textarea>
-                <button type="submit">Kaydet</button>
-            </form>
+
+          <li>
+              <a href="/help">
+                  <span class="icon">
+                      <ion-icon name="help-outline"></ion-icon>
+                  </span>
+                  <span class="title">Yardım</span>
+              </a>
+          </li>
+
+          <li>
+              <a href="/settings">
+                  <span class="icon">
+                      <ion-icon name="settings-outline"></ion-icon>
+                  </span>
+                  <span class="title">Ayarlar</span>
+              </a>
+          </li>
+
+          <li>
+               <a href="/signout">
+                  <span class="icon">
+                      <ion-icon name="log-out-outline"></ion-icon>
+                  </span>
+                  <span class="title">Çıkış</span>
+              </a>
+          </li>
+      </ul>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+        <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
         </div>
     </div>
-    <style>
+
+    <div class="cardBox">
+        <div class="card">
+            <div>
+            <div class="numbers">${freeLines + premiumLines}</div>
+                <div class="cardName">Toplam Hesap</div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="eye-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">${freeLines}</div>
+                <div class="cardName">Bedava</div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="cart-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">${premiumLines}</div>
+                <div class="cardName">Premium</div>
+            </div>
+
+            <div class="iconBx">
+            <ion-icon name="cash-outline"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="editor">
+    <form id="settings-form">
+        <label for="status">Hesap İçeriği:</label>
+<br><br>
+		<textarea name="content" placeholder="Hesap İçeriği" required>${content}</textarea><br><br>
+
+
+        <input type="submit" value="Kaydet">
+    </form>
+
+  </div>
+  </div>
+</div>
+
+
+<style>
 /* Add the heart icon and tooltip styles */
 .floating-heart {
   position: fixed;
@@ -2624,8 +3131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-</body>
-</html>
+  </body>
+  </html> 
 
         `);
     }
