@@ -2914,14 +2914,7 @@ background-color: #0056b3;
     color: var(--green); /* Customize the color of bot command names */
 }
 
-        .editor {
-            width: 90%; /* Adjusted for responsiveness */
-            max-width: 800px; /* Adjusted for responsiveness */
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
+ 
 
         .editor textarea {
             width: 100%;
@@ -3043,10 +3036,10 @@ background-color: #0056b3;
         </div>
     </div>
 
-    <div class="container">
+
         <div class="editor">
-    <form id="settings-form">
-        <label for="status">Hesap İçeriği:</label>
+    <form id="settings-form" action="/save/${folder}/${filename}" method="post">
+        <label for="status">Hesap İçeriği: ${folder}/${filename}</label>
 <br><br>
 		<textarea name="content" placeholder="Hesap İçeriği" required>${content}</textarea><br><br>
 
@@ -3054,7 +3047,7 @@ background-color: #0056b3;
         <input type="submit" value="Kaydet">
     </form>
 
-  </div>
+
   </div>
 </div>
 
