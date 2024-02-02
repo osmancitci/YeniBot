@@ -723,18 +723,6 @@ toggle.onclick = function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             function toggleCreateForm() {
               var createFormContainer = document.getElementById("create-form-container");
               createFormContainer.style.display =
@@ -2245,12 +2233,12 @@ document.addEventListener('DOMContentLoaded', () => {
     <script>
 
     // Handle form submission
-const settingsForm = document.getElementById("settings-form");
+const dosyaForm = document.getElementById("settings-form");
 
-settingsForm.addEventListener("submit", async (event) => {
+dosyaForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const formData = new FormData(settingsForm);
+  const formData = new FormData(dosyaForm);
   const formDataObject = {};
 
   formData.forEach((value, key) => {
@@ -2439,7 +2427,7 @@ app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
         <!DOCTYPE html>
 <html>
   <head>
-  <title>Hediye Üreticisi - Ayarlar</title>
+  <title>Hediye Üreticisi - Düzenle</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/css/ionicons.min.css">
@@ -3038,7 +3026,7 @@ background-color: #0056b3;
 
 
         <div class="editor">
-    <form id="settings-form" action="/save/${folder}/${filename}" method="post">
+    <form id="dosya-form">
         <label for="status">Hesap İçeriği: ${folder}/${filename}</label>
 <br><br>
 		<textarea name="content" placeholder="Hesap İçeriği" required>${content}</textarea><br><br>
@@ -3122,8 +3110,63 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+    <script>
+
+    // Handle form submission
+const dosyaForm = document.getElementById("dosya-form");
+
+dosyaForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(dosyaForm);
+  const formDataObject = {};
+
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
+  });
+
+  // Send the form data to the server for saving
+  const response = await fetch("/save/:folder/:filename", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formDataObject),
+  });
+
+  if (response.ok) {
+    toastr.success("Başarılı", "Dosya Düzenlendi");
+  } else {
+    toastr.warning("Hata", "Dosya Düzenlenemedi");
+  }
+});
 
 
+
+    // add hovered class to selected list item
+let list = document.querySelectorAll(".navigation li");
+
+function activeLink() {
+list.forEach((item) => {
+item.classList.remove("hovered");
+});
+this.classList.add("hovered");
+}
+
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+navigation.classList.toggle("active");
+main.classList.toggle("active");
+};
+
+
+    </script>
   </body>
   </html> 
 
@@ -3146,176 +3189,7 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
     if (err) {
       res.send(`Dosya Kaydedilirken Hata Oluştu: ${err}`);
     } else {
-      res.send(`
-          <html>
-          <head>
-          <title>Hediye Üreticisi - Dosya Oluştur</title>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-          <link rel="icon" href="https://cdn.discordapp.com/attachments/1152538414017687684/1154710899525947422/gift.jpg" type="image/jpg">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-						    <script src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                background-color: #222;
-                color: #fff;
-              }
-        
-              h1 {
-                color: #4CAF50;
-              }
-        
-              .popup {
-                opacity: 0;
-                transform: scale(0);
-                animation-name: fade-in;
-                animation-duration: 0.5s;
-                animation-fill-mode: forwards;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-              }
-        
-              @keyframes fade-in {
-                0% {
-                  opacity: 0;
-                  transform: scale(0);
-                }
-                100% {
-                  opacity: 1;
-                  transform: scale(1);
-                }
-              }
-        
-              .popup-icon {
-                font-size: 64px;
-                color: #4CAF50;
-                margin-bottom: 20px;
-                animation-name: checkmark-animation;
-                animation-duration: 0.5s;
-                animation-fill-mode: forwards;
-              }
-        
-              @keyframes checkmark-animation {
-                0% {
-                  opacity: 0;
-                  transform: scale(0);
-                }
-                100% {
-                  opacity: 1;
-                  transform: scale(1);
-                }
-              }
-        
-              .popup-message {
-                font-size: 24px;
-                margin-bottom: 20px;
-              }
-        
-              .popup-button {
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                text-decoration: none;
-                transition: background-color 0.3s ease;
-              }
-        
-              .popup-button:hover {
-                background-color: #45a049;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="popup">
-              <i class="fas fa-check-circle popup-icon"></i>
-              <h1 class="popup-message">"${folder}/${filename}" Dosya Oluşturuldu.</h1>
-              <a href="/edit" class="popup-button">Geri Dön</a>
-            </div>
-            <style>
-/* Add the heart icon and tooltip styles */
-.floating-heart {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #ff5555;
-  color: #fff;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.floating-heart i {
-  font-size: 24px;
-}
-
-.tooltip {
-  position: absolute;
-  background-color: #333;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  bottom: 50px;
-  right: 50px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.inline-text {
-  display: inline-block; /* Make the text inline */
-  margin-left: 5px; /* Add some spacing between "Made by" and "Science Gear" */
-}
-
-.floating-heart:hover {
-  background-color: #ff3333;
-}
-
-.floating-heart:hover .tooltip {
-  opacity: 1;
-}
-</style>
-
-<div class="floating-heart">
-		<i class="fas fa-heart"></i>
-		<div class="tooltip">Made with ❤️ By Kalkan</div>
-	  </div>
-
-<script>
-// JavaScript for toggling the tooltip
-const floatingHeart = document.querySelector('.floating-heart');
-
-floatingHeart.addEventListener('click', () => {
-  const tooltip = floatingHeart.querySelector('.tooltip');
-  tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
-});
-
-// Hide the tooltip initially
-document.addEventListener('DOMContentLoaded', () => {
-  const tooltip = floatingHeart.querySelector('.tooltip');
-  tooltip.style.display = 'none';
-});
-
-</script>
-
-
-          </body>
-        </html>      
-          `);
+	  res.send('Dosya Düzenlendi');
     }
   });
 });
