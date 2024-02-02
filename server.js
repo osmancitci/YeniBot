@@ -1347,7 +1347,7 @@ background-color: #0056b3;
                   <span class="icon">
                       <ion-icon name="home-outline"></ion-icon>
                   </span>
-                  <span class="title">Panel</span>
+                  <span class="title">Anasayfa</span>
               </a>
           </li>
 
@@ -1429,22 +1429,22 @@ background-color: #0056b3;
     <h2>Bot Commands</h2>
     <ul>
         <li>
-            <strong>/help</strong>: Displays the help command.
+            <strong>/help</strong>: Yardım komutunu görüntüler.
         </li>
         <li>
-            <strong>/create</strong>: Create a new service.
+            <strong>/create</strong>: Yeni bir servis oluşturur.
         </li>
         <li>
-            <strong>/free</strong>: Generate a reward.
+            <strong>/free</strong>: Ödül üretir.
         </li>
         <li>
-            <strong>/add</strong>: Add a reward to the stock.
+            <strong>/add</strong>: Stoka bir ödül ekler.
         </li>
         <li>
-            <strong>/stock</strong>: View the current stock.
+            <strong>/stock</strong>: Mevcut stoku görüntüler.
         </li>
         <li>
-            <strong>/premium</strong>: Generate a premium reward.
+            <strong>/premium</strong>: Premium bir ödül üretir.
         </li>
     </ul>
 </div>
@@ -2341,7 +2341,7 @@ app.post("/save-settings", requireLogin, (req, res) => {
       }
 
       res.json({
-        message: "Settings saved successfully"
+        message: "Ayarlar Kaydedildi."
       });
     });
   });
@@ -2398,7 +2398,7 @@ app.post('/rename', requireLogin, (req, res) => {
     if (err) {
       res.status(500).send(`Dosya Yeniden Adlandırılırken Hata Oluştu: ${err}`);
     } else {
-      res.send('File renamed successfully');
+      res.send('Dosya Yeniden Adlandırıldı.');
     }
   });
 });
