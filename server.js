@@ -772,12 +772,12 @@ toggle.onclick = function () {
               })
                 .then(response => response.text())
                 .then(message => {
-                  alert(message); // Show a pop-up message with the response from the server
+                  toastr.success("Başarılı", message); // Show a pop-up message with the response from the server
                   // Refresh the page to reflect the changes
                   location.reload();
                 })
                 .catch(error => {
-                  console.error('Hata :', error);
+                  toastr.warning("Hata", error);
                 });
             }            
           
@@ -828,12 +828,14 @@ function confirmRenameFile(folder, fileName) {
     })
       .then((response) => response.text())
       .then((message) => {
-        alert(message);
+        //alert(message);
+		toastr.success("Başarılı", message);
         // Refresh the page to reflect the changes
         location.reload();
       })
       .catch((error) => {
-        console.error('Hata :', error);
+	   toastr.warning("Hata", error);
+       //console.error('Hata :', error);
       });
     closeRenameModal(); // Close the modal after renaming
   }
@@ -857,12 +859,12 @@ function confirmRenameFile(folder, fileName) {
                   })
                     .then(response => response.text())
                     .then(message => {
-                      alert(message);
+                      toastr.success("Başarılı", message);
                       // Refresh the page to reflect the changes
                       location.reload();
                     })
                     .catch(error => {
-                      console.error('Hata :', error);
+                      toastr.warning("Hata", error);
                     });
                 }
               }
@@ -881,12 +883,12 @@ function confirmRenameFile(folder, fileName) {
                 })
                   .then(response => response.text())
                   .then(message => {
-                    alert(message);
+                    toastr.success("Başarılı", message);
                     // Refresh the page to reflect the changes
                     location.reload();
                   })
                   .catch(error => {
-                    console.error('Hata :', error);
+                    toastr.warning("Hata", error);
                   });
               }
             </script>
@@ -1448,13 +1450,13 @@ background-color: #0056b3;
 </div>
 
 <div class="features">
-    <h2>Features</h2>
-    <ul>
-      <li><strong>Automated Giveaways:</strong> GiftMaster automates the entire giveaway process, from start to finish. Simply set up the giveaway parameters, and GiftMaster will handle the rest, including participant entry tracking, winner selection, and prize distribution.</li>
-      <li><strong>Safety and Security:</strong> GiftMaster ensures a safe and secure giveaway experience. The bot employs various anti-cheat measures to prevent fraudulent entries, ensuring fairness for all participants.</li>
-      <li><strong>Easy Configuration:</strong> Setting up GiftMaster is a breeze. The bot provides an intuitive and user-friendly setup process, guiding you through each step to configure the giveaway settings according to your preferences.</li>
-    </ul>
-  </div>
+<h2>Özellikler</h2>
+<ul>
+  <li><strong>Otomatik Hediye Üretimi:</strong> Hediye Üretici, baştan sona otomatik bir hediye üretim süreci sunar. Sadece hediye parametrelerini belirleyin, Hediye Üretici geri kalanını halleder; katılımcı giriş takibi, kazanan seçimi ve ödül dağıtımı dahil.</li>
+  <li><strong>Güvenlik ve Koruma:</strong> Hediye Üretici, güvenli ve korumalı bir hediye deneyimi sağlar. Bot, hileli girişleri önlemek için çeşitli önlemler kullanarak tüm katılımcılar için adil bir ortam sunar.</li>
+  <li><strong>Kolay Yapılandırma:</strong> Hediye Üretici'yi kurmak çok kolay. Bot, tercihlerinize göre hediye ayarlarını yapılandırmak için size adım adım rehberlik eden sezgisel ve kullanıcı dostu bir kurulum süreci sunar.</li>
+</ul>
+
 
   <style>
   /* Add the heart icon and tooltip styles */
@@ -2396,7 +2398,7 @@ app.post('/rename', requireLogin, (req, res) => {
     if (err) {
       res.status(500).send(`Dosya Yeniden Adlandırılırken Hata Oluştu: ${err}`);
     } else {
-      toastr.success("Başarılı", "Yeni Dosya İsmi Verildi."); 
+      res.send('File renamed successfully');
     }
   });
 });
