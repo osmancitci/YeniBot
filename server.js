@@ -2245,9 +2245,9 @@ settingsForm.addEventListener("submit", async (event) => {
   });
 
   if (response.ok) {
-    alert("Ayarlar Kaydedildi..");
+    toastr.success("Başarılı", "Ayarlar Kaydedildi");
   } else {
-    alert("Ayarlar Kaydedilemedi..");
+    toastr.warning("Hata", "Ayarlar Kaydedilemedi");
   }
 });
 
