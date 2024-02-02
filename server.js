@@ -2396,7 +2396,7 @@ app.post('/rename', requireLogin, (req, res) => {
     if (err) {
       res.status(500).send(`Dosya Yeniden Adlandırılırken Hata Oluştu: ${err}`);
     } else {
-      res.toastr.success("Başarılı", "Yeni Dosya İsmi Verildi.");
+      toastr.success("Başarılı", "Yeni Dosya İsmi Verildi."); 
     }
   });
 });
