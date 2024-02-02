@@ -2035,7 +2035,7 @@ background-color: #0056b3;
                   <span class="icon">
                   <ion-icon name="gift-sharp"></ion-icon>
                   </span>
-                  <span class="title">Hediye Üretici</span>
+                  <span class="title">Gift Master</span>
               </a>
           </li>
 
@@ -2220,84 +2220,63 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<script>
-  // Form gönderimini ele al
-  const settingsForm = document.getElementById("settings-form");
+    <script>
 
-  settingsForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    // Handle form submission
+const settingsForm = document.getElementById("settings-form");
 
-    const formData = new FormData(settingsForm);
-    const formDataObject = {};
+settingsForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
+  const formData = new FormData(settingsForm);
+  const formDataObject = {};
 
-    // Form verilerini sunucuya kaydetmek için gönder
-    try {
-      const response = await fetch("/save-settings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataObject),
-      });
-
-      if (response.ok) {
-        // Başarı tostunu göster
-        showSuccessToast();
-      } else {
-        // Hata tostunu göster
-        showErrorToast();
-      }
-    } catch (error) {
-      // Ağ veya beklenmeyen hata için hata tostunu göster
-      showErrorToast();
-    }
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
   });
 
-  // Seçilen liste öğesine hovered sınıfını ekle
-  let list = document.querySelectorAll(".navigation li");
+  // Send the form data to the server for saving
+  const response = await fetch("/save-settings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formDataObject),
+  });
 
-  function activeLink() {
-    list.forEach((item) => {
-      item.classList.remove("hovered");
-    });
-    this.classList.add("hovered");
+  if (response.ok) {
+    alert("Ayarlar Kaydedildi..");
+  } else {
+    alert("Ayarlar Kaydedilemedi..");
   }
+});
 
-  list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
-  // Menü Toggle
-  let toggle = document.querySelector(".toggle");
-  let navigation = document.querySelector(".navigation");
-  let main = document.querySelector(".main");
 
-  toggle.onclick = function () {
-    navigation.classList.toggle("active");
-    main.classList.toggle("active");
-  };
+    // add hovered class to selected list item
+let list = document.querySelectorAll(".navigation li");
 
-  // Başarı tostunu göstermek için fonksiyon
-  function showSuccessToast() {
-    const successToast = document.querySelector(".toast.success");
-    successToast.style.display = "block";
-    setTimeout(() => {
-      successToast.style.display = "none";
-    }, 5000); // İhtiyaca göre süreyi ayarlayın
-  }
+function activeLink() {
+list.forEach((item) => {
+item.classList.remove("hovered");
+});
+this.classList.add("hovered");
+}
 
-  // Hata tostunu göstermek için fonksiyon
-  function showErrorToast() {
-    const errorToast = document.querySelector(".toast.error");
-    errorToast.style.display = "block";
-    setTimeout(() => {
-      errorToast.style.display = "none";
-    }, 5000); // İhtiyaca göre süreyi ayarlayın
-  }
-</script>
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+navigation.classList.toggle("active");
+main.classList.toggle("active");
+};
+
+
+    </script>
   </body>
   </html> `;
 
