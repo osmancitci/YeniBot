@@ -1,36 +1,35 @@
 // Maded by @sanalmuz
 
-const config = require('./config.json');
-const path = require('path'); // Import the path module
-const express = require('express');
-const cookieParser = require('cookie-parser'); // Add cookie-parser middleware
-const fs = require('fs');
+const config = require("./config.json");
+const path = require("path"); // Import the path module
+const express = require("express");
+const cookieParser = require("cookie-parser"); // Add cookie-parser middleware
+const fs = require("fs");
 const app = express();
-const session = require('express-session');
-app.use(express.static('dashboard'));
-require('dotenv').config();
+const session = require("express-session");
+app.use(express.static("dashboard"));
+require("dotenv").config();
 
-
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser()); // Use cookie-parser middleware
 
 // Middleware to check if the user is logged in using cookies
 function requireLogin(req, res, next) {
   if (req.cookies.user) {
-
     next(); // User is logged in, continue to the next middleware or route handler
   } else {
     // User is not logged in, send the accessdecline.html file
-    res.sendFile(path.join(__dirname, 'dashboard', 'accessdecline.html'));
+    res.sendFile(path.join(__dirname, "dashboard", "accessdecline.html"));
   }
 }
 
-
 // Handle the login form submission
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -40,12 +39,12 @@ app.post('/login', (req, res) => {
     (password === process.env.password || password === config.password)
   ) {
     // Set a cookie to remember the user's login status
-    res.cookie('user', username, {
-      maxAge: 7 * 24 * 60 * 60 * 1000
+    res.cookie("user", username, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     }); // Cookie will expire in 7 days
-    res.redirect('/edit');
+    res.redirect("/edit");
   } else {
-    res.sendFile(path.join(__dirname, 'dashboard', 'invalidlogin.html'));
+    res.sendFile(path.join(__dirname, "dashboard", "invalidlogin.html"));
   }
 });
 
@@ -55,10 +54,10 @@ function countLinesInFolder(folderPath) {
   let totalLines = 0;
 
   files.forEach((file) => {
-    if (file.endsWith('.txt')) {
+    if (file.endsWith(".txt")) {
       const filePath = path.join(folderPath, file);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const lines = fileContent.split('\n').length;
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      const lines = fileContent.split("\n").length;
       totalLines += lines;
     }
   });
@@ -67,34 +66,33 @@ function countLinesInFolder(folderPath) {
 }
 
 // Define a route for handling sign-out
-app.get('/signout', (req, res) => {
+app.get("/signout", (req, res) => {
   // Clear the user cookie to log them out
-  res.clearCookie('user');
-  res.redirect('/'); // Redirect the user to the login page
+  res.clearCookie("user");
+  res.redirect("/"); // Redirect the user to the login page
 });
 
-
-
 // Serve the login page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dashboard', 'login.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "dashboard", "login.html"));
 });
 
 // Serve the file editor page
-app.get('/edit', requireLogin, (req, res) => {
-  const freeLines = countLinesInFolder('./free');
-  const premiumLines = countLinesInFolder('./premium');
+app.get("/edit", requireLogin, (req, res) => {
+  const freeLines = countLinesInFolder("./free");
+  const premiumLines = countLinesInFolder("./premium");
   // Fetch the list of files and populate the select options
-  fs.readdir('free', (err, stockFiles) => {
+  fs.readdir("free", (err, stockFiles) => {
     if (err) {
       res.send(`Dizin Okunurken Hata Oluştu: ${err}`);
     } else {
-      fs.readdir('premium', (err, pstockFiles) => {
+      fs.readdir("premium", (err, pstockFiles) => {
         if (err) {
           res.send(`Dizin Okunurken Hata Oluştu: ${err}`);
         } else {
-          const stockFileLinks = stockFiles.map((file) => {
-            return `<div class="file-item">
+          const stockFileLinks = stockFiles
+            .map((file) => {
+              return `<div class="file-item">
               <span class="file-icon"><i class="fa fa-file-text-o"></i></span>
               <a href="/edit/free/${file}" class="file-name">${file}</a>
               <div class="file-actions">
@@ -103,10 +101,12 @@ app.get('/edit', requireLogin, (req, res) => {
                 <button class="delete-button" onclick="deleteFile('free', '${file}')">Sil</button>
               </div>
             </div>`;
-          }).join('');
+            })
+            .join("");
 
-          const pstockFileLinks = pstockFiles.map((file) => {
-            return `<div class="file-item">
+          const pstockFileLinks = pstockFiles
+            .map((file) => {
+              return `<div class="file-item">
               <span class="file-icon"><i class="fa fa-file-text-o"></i></span>
               <a href="/edit/premium/${file}" class="file-name">${file}</a>
               <div class="file-actions">
@@ -114,7 +114,8 @@ app.get('/edit', requireLogin, (req, res) => {
                 <button class="delete-button" onclick="deleteFile('premium', '${file}')">Sil</button>
               </div>
             </div>`;
-          }).join('');
+            })
+            .join("");
 
           res.send(`
           <html>
@@ -891,10 +892,10 @@ function confirmRenameFile(folder, fileName) {
 });
 
 // Serve the help page
-app.get('/help', requireLogin, (req, res) => {
+app.get("/help", requireLogin, (req, res) => {
   // Create the content for your help page here
-  const freeLines = countLinesInFolder('./free');
-  const premiumLines = countLinesInFolder('./premium');
+  const freeLines = countLinesInFolder("./free");
+  const premiumLines = countLinesInFolder("./premium");
   // Fetch the list of files and populate the select options
   const helpContent = `<html>
   <head>
@@ -1552,12 +1553,11 @@ main.classList.toggle("active");
   res.send(helpContent);
 });
 
-
 // Serve the settings page
-app.get('/settings', requireLogin, (req, res) => {
+app.get("/settings", requireLogin, (req, res) => {
   // Create the content for your help page here
-  const freeLines = countLinesInFolder('./free');
-  const premiumLines = countLinesInFolder('./premium');
+  const freeLines = countLinesInFolder("./free");
+  const premiumLines = countLinesInFolder("./premium");
   // Create the content for your settings page here
   const settingsContent = `<html>
   <head>
@@ -2135,22 +2135,34 @@ background-color: #0056b3;
   
     <form id="settings-form">
         <label for="status">Durum:</label>
-        <input type="text" id="status" name="status" value="${config.status}"><br><br>
+        <input type="text" id="status" name="status" value="${
+          config.status
+        }"><br><br>
 
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
-        <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>
+        <input type="text" id="genCooldown" name="genCooldown" value="${
+          config.genCooldown
+        }"><br><br>
 
         <label for="premiumCooldown">Premium Bekleme Süresi: (Saniye)</label>
-        <input type="text" id="premiumCooldown" name="premiumCooldown" value="${config.premiumCooldown}"><br><br>
+        <input type="text" id="premiumCooldown" name="premiumCooldown" value="${
+          config.premiumCooldown
+        }"><br><br>
 
         <label for="website">Web Site:</label>
-        <input type="text" id="website" name="website" value="${config.website}"><br><br>
+        <input type="text" id="website" name="website" value="${
+          config.website
+        }"><br><br>
 
         <label for="banner">Afiş:</label>
-        <input type="text" id="banner" name="banner" value="${config.banner}"><br><br>
+        <input type="text" id="banner" name="banner" value="${
+          config.banner
+        }"><br><br>
 
         <label for="footer">Alt Bilgi:</label>
-        <input type="text" id="footer" name="footer" value="${config.footer}"><br><br>
+        <input type="text" id="footer" name="footer" value="${
+          config.footer
+        }"><br><br>
 
         <input type="submit" value="Kaydet">
     </form>
@@ -2294,7 +2306,6 @@ main.classList.toggle("active");
   res.send(settingsContent);
 });
 
-
 const bodyParser = require("body-parser");
 
 // Add bodyParser middleware to parse JSON data
@@ -2305,11 +2316,11 @@ app.post("/save-settings", requireLogin, (req, res) => {
   const settings = req.body;
 
   // Read the current contents of config.json
-  fs.readFile('./config.json', 'utf8', (err, data) => {
+  fs.readFile("./config.json", "utf8", (err, data) => {
     if (err) {
       console.error("Config Dosyası Okunurken Hata Oluştu:", err);
       res.status(500).json({
-        error: "Config Dosyası Okunamadı."
+        error: "Config Dosyası Okunamadı.",
       });
       return;
     }
@@ -2320,63 +2331,62 @@ app.post("/save-settings", requireLogin, (req, res) => {
     Object.assign(config, settings);
 
     // Write the updated config object back to config.json
-    fs.writeFile('./config.json', JSON.stringify(config, null, 2), (err) => {
+    fs.writeFile("./config.json", JSON.stringify(config, null, 2), (err) => {
       if (err) {
         console.error("Config Yazılırken Hata Oluştu:", err);
         res.status(500).json({
-          error: "Ayarlar Kaydedilemedi."
+          error: "Ayarlar Kaydedilemedi.",
         });
         return;
       }
 
       res.json({
-        message: "Ayarlar Kaydedildi."
+        message: "Ayarlar Kaydedildi.",
       });
     });
   });
 });
 
-
-app.use(express.urlencoded({
-  extended: true
-}));
-
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 // Handle the creation of a new file
-app.post('/create', requireLogin, (req, res) => {
+app.post("/create", requireLogin, (req, res) => {
   const folder = req.body.folder;
   let fileName = req.body.fileName;
 
   // Check if the folder is valid
-  if (folder === 'free' || folder === 'premium') {
+  if (folder === "free" || folder === "premium") {
     // Check if the file name has .txt extension, if not, add it
     let fullFileName = fileName; // Create a new variable to store the full file name
-    if (!fullFileName.endsWith('.txt')) {
-      fullFileName += '.txt';
+    if (!fullFileName.endsWith(".txt")) {
+      fullFileName += ".txt";
     }
 
     // Create the file in the selected folder
-    fs.writeFile(`${folder}/${fullFileName}`, '', (err) => {
+    fs.writeFile(`${folder}/${fullFileName}`, "", (err) => {
       if (err) {
         res.send(`Dosya Oluşturulurken Hata Oluştu: ${err}`);
       } else {
-        res.send('Dosya Oluşturuldu.');
+        res.send("Dosya Oluşturuldu.");
       }
     });
   } else {
-    res.send('Geçersiz Dosya Dizini.');
+    res.send("Geçersiz Dosya Dizini.");
   }
 });
 
-
 // Handle the file rename request
-app.post('/rename', requireLogin, (req, res) => {
+app.post("/rename", requireLogin, (req, res) => {
   const folder = req.body.folder;
   const oldFileName = req.body.oldFileName;
   let newFileName = req.body.newFileName;
 
   // Check if the new file name has .txt extension, if it does, remove it
-  if (newFileName.endsWith('.txt')) {
+  if (newFileName.endsWith(".txt")) {
     newFileName = newFileName.slice(0, -4); // Remove the last 4 characters (.txt)
   }
 
@@ -2387,14 +2397,13 @@ app.post('/rename', requireLogin, (req, res) => {
     if (err) {
       res.status(500).send(`Dosya Yeniden Adlandırılırken Hata Oluştu: ${err}`);
     } else {
-      res.send('Dosya Yeniden Adlandırıldı.');
+      res.send("Dosya Yeniden Adlandırıldı.");
     }
   });
 });
 
-
 // Handle the file delete request
-app.post('/delete', requireLogin, (req, res) => {
+app.post("/delete", requireLogin, (req, res) => {
   const folder = req.body.folder;
   const fileName = req.body.fileName;
   const filePath = `${folder}/${fileName}`;
@@ -2403,24 +2412,21 @@ app.post('/delete', requireLogin, (req, res) => {
     if (err) {
       res.status(500).send(`Dosya Silinirken Hata Oluştu: ${err}`);
     } else {
-      res.send('Dosya Silindi');
+      res.send("Dosya Silindi");
     }
   });
 });
 
-
-
-
 // Serve the file editor page with the selected file
-app.get('/edit/:folder/:filename', requireLogin, (req, res) => {
-  const freeLines = countLinesInFolder('./free');
-  const premiumLines = countLinesInFolder('./premium');
+app.get("/edit/:folder/:filename", requireLogin, (req, res) => {
+  const freeLines = countLinesInFolder("./free");
+  const premiumLines = countLinesInFolder("./premium");
   const folder = req.params.folder;
   const filename = req.params.filename;
   const filePath = `${folder}/${filename}`;
 
   // Read the content of the selected file
-  fs.readFile(filePath, 'utf-8', (err, content) => {
+  fs.readFile(filePath, "utf-8", (err, content) => {
     if (err) {
       res.send(`Dosya Okunurken Hata Oluştu: ${err}`);
     } else {
@@ -3176,10 +3182,9 @@ main.classList.toggle("active");
   });
 });
 
-
 app.use(bodyParser.json());
 // Handle the file saving
-app.post('/save/:folder/:filename', requireLogin, (req, res) => {
+app.post("/save/:folder/:filename", requireLogin, (req, res) => {
   const folder = req.params.folder;
   const filename = req.params.filename;
   const content = req.body.content;
@@ -3190,12 +3195,10 @@ app.post('/save/:folder/:filename', requireLogin, (req, res) => {
     if (err) {
       res.send(`Dosya Kaydedilirken Hata Oluştu: ${err}`);
     } else {
-	  res.send('Dosya Düzenlendi');
+      res.send("Dosya Düzenlendi");
     }
   });
 });
-
-
 
 // Start the server
 app.listen(config.port, () => {
