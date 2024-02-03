@@ -2061,10 +2061,10 @@ background-color: #0056b3;
     color: var(--green); /* Customize the color of bot command names */
 }
 
-input[type="radio"] {
+.payment-options input[type="radio"] {
   display: none;
 }
-label {
+.payment-options label {
   position: relative;
   color: #4189e0;
   font-family: "Poppins", sans-serif;
@@ -2073,25 +2073,25 @@ label {
   align-items: center;
   gap: 0.8em;
   border: 3px solid #4189e0;
-  padding: 1em 2em;
+  padding: 10px 20px;
   border-radius: 0.5em;
 }
-label:before {
+.payment-options label:before {
   content: "";
-  height: 2em;
-  width: 2em;
+  height: 10px;
+  width: 10px;
   border: 3px solid #4189e0;
   border-radius: 50%;
 }
 
-input[type="radio"]:checked + label:before {
-  height: 1em;
-  width: 1em;
-  border: 0.65em solid #ffffff;
+.payment-options input[type="radio"]:checked + label:before {
+  height: 10px;
+  width: 10px;
+  border: 3px solid #ffffff;
   background-color: #4189e0;
 }
 
-input[type="radio"]:checked + label {
+.payment-options input[type="radio"]:checked + label {
   background-color: #4189e0;
   color: #ffffff;
 }
@@ -2197,12 +2197,15 @@ input[type="radio"]:checked + label {
     <form id="settings-form">
         <label for="status">Durum:</label>
         <input type="text" id="status" name="status" value="${config.status}"><br><br>
-		
-		 <label for="status">Durum Kodu:</label><br>
-    <input type="radio" name="payment" id="card" checked="checked" />
-    <label for="card">Card</label>
-    <input type="radio" name="payment" id="cash" />
-    <label for="cash">Cash</label>
+
+	<label for="status">Kodlar:</label><br>
+    <div class="payment-options">
+        
+        <input type="radio" name="payment" id="card" checked="checked" />
+        <label id="yazi" for="card">Card</label>
+        <input type="radio" name="payment" id="cash" />
+        <label id="yazi" for="cash">Cash</label>
+    </div>
 <br><br>
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
         <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>
