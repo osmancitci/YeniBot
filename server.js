@@ -762,6 +762,7 @@ toggle.onclick = function () {
                 .then(message => {
                   toastr.success("Başarılı", message); // Show a pop-up message with the response from the server
                   // Refresh the page to reflect the changes
+				  
                   location.reload();
                 })
                 .catch(error => {
