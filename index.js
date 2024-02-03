@@ -25,12 +25,12 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
   console.log(`Bota Giriş Yaptım: ${client.user.tag}!`);
-  client.user.setActivity(`Denemeeeee`, { type: "WATCHING" }); // Set the bot's activity status
+  client.user.setActivity(config.status, { type: "PLAYING", url: "https://twitch.tv/osmancitci"}); // Set the bot's activity status
     /* You can change the activity type to:
      * LISTENING
      * WATCHING
      * COMPETING
-     * STREAMING (you need to add a twitch.tv url next to type like this:   { type: "STREAMING", url: "https://twitch.tv/twitch_username_here"} )
+     * STREAMING (you need to add a twitch.tv url next to type like this:   { type: "STREAMING", url: "https://twitch.tv/osmancitci"} )
      * PLAYING (default)
     */
 });

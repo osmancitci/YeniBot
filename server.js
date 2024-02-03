@@ -17,6 +17,10 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser()); // Use cookie-parser middleware
 
+
+
+
+
 // Middleware to check if the user is logged in using cookies
 function requireLogin(req, res, next) {
   if (req.cookies.user) {
@@ -65,6 +69,9 @@ function countLinesInFolder(folderPath) {
 
   return totalLines;
 }
+
+
+
 
 // Define a route for handling sign-out
 app.get('/signout', (req, res) => {
@@ -721,7 +728,11 @@ toggle.onclick = function () {
   main.classList.toggle("active");
 };
 
-
+function sayfayiYenidenYukle() {
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+}
 
             function toggleCreateForm() {
               var createFormContainer = document.getElementById("create-form-container");
@@ -762,7 +773,8 @@ toggle.onclick = function () {
                 .then(message => {
                   toastr.success("Başarılı", message); // Show a pop-up message with the response from the server
                   // Refresh the page to reflect the changes
-                  location.reload();
+                  //location.reload();
+				  sayfayiYenidenYukle();
                 })
                 .catch(error => {
                   toastr.warning("Hata", error);
@@ -798,6 +810,12 @@ function closeRenameModal() {
   modal.style.display = 'none';
 }
 
+function sayfayiYenidenYukle() {
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+}
+
 // Rename the file and close the modal
 function confirmRenameFile(folder, fileName) {
   const newName = document.getElementById('newFileName').value;
@@ -818,8 +836,9 @@ function confirmRenameFile(folder, fileName) {
       .then((message) => {
         //alert(message);
 		toastr.success("Başarılı", message);
+		sayfayiYenidenYukle();
         // Refresh the page to reflect the changes
-        location.reload();
+        //location.reload();
       })
       .catch((error) => {
 	   toastr.warning("Hata", error);
@@ -829,6 +848,11 @@ function confirmRenameFile(folder, fileName) {
   }
 }
 
+function sayfayiYenidenYukle() {
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+}
 
               function renameFile(folder, fileName) {
                 const newName = prompt('Dosyanın Yeni Adını Girin:');
@@ -848,8 +872,9 @@ function confirmRenameFile(folder, fileName) {
                     .then(response => response.text())
                     .then(message => {
                       toastr.success("Başarılı", message);
+					  sayfayiYenidenYukle();
                       // Refresh the page to reflect the changes
-                      location.reload();
+                      //location.reload();
                     })
                     .catch(error => {
                       toastr.warning("Hata", error);
@@ -873,7 +898,8 @@ function confirmRenameFile(folder, fileName) {
                   .then(message => {
                     toastr.success("Başarılı", message);
                     // Refresh the page to reflect the changes
-                    location.reload();
+                    //location.reload();
+					sayfayiYenidenYukle();
                   })
                   .catch(error => {
                     toastr.warning("Hata", error);
@@ -1414,7 +1440,7 @@ background-color: #0056b3;
 
 
 <div class="bot-commands">
-    <h2>Bot Commands</h2>
+    <h2>Bot Komutları</h2>
     <ul>
         <li>
             <strong>/help</strong>: Yardım komutunu görüntüler.
@@ -2035,6 +2061,42 @@ background-color: #0056b3;
     color: var(--green); /* Customize the color of bot command names */
 }
 
+input[type="radio"] {
+  display: none;
+}
+label {
+  position: relative;
+  color: #4189e0;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  border: 3px solid #4189e0;
+  padding: 1em 2em;
+  border-radius: 0.5em;
+}
+label:before {
+  content: "";
+  height: 2em;
+  width: 2em;
+  border: 3px solid #4189e0;
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked + label:before {
+  height: 1em;
+  width: 1em;
+  border: 0.65em solid #ffffff;
+  background-color: #4189e0;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #4189e0;
+  color: #ffffff;
+}
+
+
   </style>
   <body>
   <div class="container">
@@ -2135,7 +2197,13 @@ background-color: #0056b3;
     <form id="settings-form">
         <label for="status">Durum:</label>
         <input type="text" id="status" name="status" value="${config.status}"><br><br>
-
+		
+		 <label for="status">Durum Kodu:</label><br>
+    <input type="radio" name="payment" id="card" checked="checked" />
+    <label for="card">Card</label>
+    <input type="radio" name="payment" id="cash" />
+    <label for="cash">Cash</label>
+<br><br>
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
         <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>
 
