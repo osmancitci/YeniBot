@@ -24,13 +24,13 @@ const rest = new REST({ version: "9" }).setToken(process.env.token || token);
   try {
     if (globalDeploy) {
       // Deploy commands globally
-      await rest.put(Routes.applicationCommands(clientId), {
+      await rest.put(Routes.applicationCommands(process.env.clientId), {
         body: commands,
       });
       console.log("\n✅ Komutlar yüklendi tekrardan.");
     } else {
       // Deploy commands to a specific guild
-      await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+      await rest.put(Routes.applicationGuildCommands(process.env.clientId, process.env.guildId), {
   body: commands,
 });
 
