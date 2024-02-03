@@ -2,7 +2,7 @@ const fs = require("fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { clientId, guildId, token, globalDeploy } = require("./config.json");
-
+require('dotenv').config();
 const commands = [];
 const commandFiles = fs
   .readdirSync("./commands")
@@ -24,13 +24,13 @@ const rest = new REST({ version: "9" }).setToken(process.env.token || token);
   try {
     if (globalDeploy) {
       // Deploy commands globally
-      await rest.put(Routes.applicationCommands(process.env.clientId), {
+      await rest.put(Routes.applicationCommands(clientId), {
         body: commands,
       });
       console.log("\n✅ Komutlar yüklendi tekrardan.");
     } else {
       // Deploy commands to a specific guild
-      await rest.put(Routes.applicationGuildCommands(process.env.clientId, process.env.guildId), {
+      await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
   body: commands,
 });
 
