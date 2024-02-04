@@ -2209,12 +2209,26 @@ background-color: #0056b3;
         <label id="COMPETING" for="COMPETING">Yarışıyor</label>
 		<input type="radio" name="payment" id="STREAMING"/>
         <label id="STREAMING" for="STREAMING">Canlı</label>
-		<input type="radio" name="payment" id="PLAYING" checked="checked" />
+		<input type="radio" name="payment" id="PLAYING"/>
         <label id="PLAYING" for="PLAYING">Oynuyor</label>
 		
 
 		
     </div>
+	
+    <script>
+        var setActivityValue = "${config.setActivity}"; // Bu değeri config dosyanızdan alınan bir değerle değiştirin
+
+        // Radio butonları kontrol et ve uygun olanı seç
+        var radioButtons = document.getElementsByName("payment");
+
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].id === setActivityValue) {
+                radioButtons[i].checked = true;
+                break;
+            }
+        }
+    </script>
 <br><br>
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
         <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>

@@ -5,16 +5,16 @@
   "port": "3000",
   "clientId": "",
   "guildId": "",
-  "globalDeploy": false,
-  "status": "kalk",
+  "globalDeploy": true,
+  "status": "neysene",
   "website": "https://osmancitci",
   "banner": "https://media.discordapp.net/attachments/1200381157745893426/1201444181697118269/standard_8.gif?ex=65c9d716&is=65b76216&hm=612bf01fd8e85723e08fbd972f25538b719ba12e7866bb8aeecc5bd028fb4b37&=&width=585&height=75",
   "footer": "Kalk",
   "genChannel": "1202742251873239040",
   "premiumChannel": "1202742371662565396",
-  "genCooldown": "99",
+  "genCooldown": "500",
   "premiumCooldown": "3",
-  "setActivity": "WATCHING",
+  "setActivity": "STREAMING",
   "color": {
     "green": "0x57F287",
     "yellow": "0xFEE75C",
@@ -24,5 +24,6 @@
   "command": {
     "notfound_message": true,
     "error_message": true
-  }
+  },
+  "payment": "on"
 }
