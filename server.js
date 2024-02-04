@@ -2201,10 +2201,19 @@ background-color: #0056b3;
 	<label for="status">Kodlar:</label><br>
     <div class="payment-options">
         
-        <input type="radio" name="payment" id="card" checked="checked" />
-        <label id="yazi" for="card">Card</label>
-        <input type="radio" name="payment" id="cash" />
-        <label id="yazi" for="cash">Cash</label>
+        <input type="radio" name="payment" id="LISTENING"/>
+        <label id="LISTENING" for="LISTENING">Dinliyor</label>
+		<input type="radio" name="payment" id="WATCHING"/>
+        <label id="WATCHING" for="WATCHING">İzliyor</label>
+		<input type="radio" name="payment" id="COMPETING"/>
+        <label id="COMPETING" for="COMPETING">Yarışıyor</label>
+		<input type="radio" name="payment" id="STREAMING"/>
+        <label id="STREAMING" for="STREAMING">Canlı</label>
+		<input type="radio" name="payment" id="PLAYING" checked="checked" />
+        <label id="PLAYING" for="PLAYING">Oynuyor</label>
+		
+
+		
     </div>
 <br><br>
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
