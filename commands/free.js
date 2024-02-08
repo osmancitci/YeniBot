@@ -7,14 +7,29 @@ const CatLoggr = require('cat-loggr');
 const log = new CatLoggr();
 const generated = new Set();
 
+const generateChoices = () => {
+    const files = fs.readdirSync('./free');
+    const choices = [];
+    for (const file of files) {
+        const name = file.replace('.txt', '');
+        const value = name;
+        choices.push({ name, value });
+    }
+    return choices;
+};
+
+//console.log(generateChoices());
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('bedava')
-        .setDescription('Stok varsa belirli bir hizmet oluşturun')
+        .setDescription('Ücretiz Hesap Alın.')
         .addStringOption(option =>
             option.setName('service')
                 .setDescription('Oluşturulacak hizmetin adı')
-                .setRequired(true)),
+                .setRequired(true)
+               .addChoices(...generateChoices())
+                        
+                        ),
 
     async execute(interaction) {
         const service = interaction.options.getString('service');
@@ -26,7 +41,7 @@ module.exports = {
                 .setColor(config.color.red)
                 .setTitle('Yanlış komut kullanımı!')
                 .setDescription(`Bu kanalda \`/bedava\` komutunu kullanamazsınız! <#${config.genChannel}>'da deneyin!`)
-                .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+                .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
                 .setTimestamp();
 
             return interaction.reply({ embeds: [wrongChannelEmbed], ephemeral: true });
@@ -67,7 +82,7 @@ module.exports = {
                     .setColor(config.color.red)
                     .setTitle('Jeneratör hatası!')
                     .setDescription(`\`${service}\` hizmeti boş!`)
-                    .setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+                    .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
                     .setTimestamp();
 
                 return interaction.reply({ embeds: [emptyServiceEmbed], ephemeral: true });
@@ -89,8 +104,8 @@ module.exports = {
                 const embedMessage = new MessageEmbed()
                     .setColor(config.color.green)
                     .setTitle('Ücretsiz hesap oluşturuldu')
-                    .addField('Servis', `\`\`\`${service[0].toUpperCase()}${service.slice(1).toLowerCase()}\`\`\``, true)
-                    .addField('Hesap', `\`\`\`${generatedAccount}\`\`\``, true)
+                    .addFields({ name: 'Servis', value: `\`\`\`${service[0].toUpperCase()}${service.slice(1).toLowerCase()}\`\`\``, inline: true })
+					          .addFields({ name: 'Hesap', value: `\`\`\`${generatedAccount}\`\`\``, inline: true })
                     .setImage(config.banner)
                     .setTimestamp();
 

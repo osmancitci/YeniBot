@@ -1,5 +1,3 @@
-// Maded by @sanalmuz
-
 const config = require('./config.json');
 const path = require('path'); // Import the path module
 const express = require('express');
@@ -2196,55 +2194,73 @@ background-color: #0056b3;
   
     <form id="settings-form">
         <label for="status">Durum:</label>
-        <input type="text" id="status" name="status" value="${config.status}"><br><br>
+        <input type="text" id="status" name="status" value="${config.status}"><br>
 
 	<label for="status">Kodlar:</label><br>
-    <div class="payment-options">
-        
-        <input type="radio" name="payment" id="LISTENING"/>
-        <label id="LISTENING" for="LISTENING">Dinliyor</label>
-		<input type="radio" name="payment" id="WATCHING"/>
-        <label id="WATCHING" for="WATCHING">İzliyor</label>
-		<input type="radio" name="payment" id="COMPETING"/>
-        <label id="COMPETING" for="COMPETING">Yarışıyor</label>
-		<input type="radio" name="payment" id="STREAMING"/>
-        <label id="STREAMING" for="STREAMING">Canlı</label>
-		<input type="radio" name="payment" id="PLAYING"/>
-        <label id="PLAYING" for="PLAYING">Oynuyor</label>
-		
+<div class="payment-options">
+    <input type="radio" name="setActivity" id="LISTENING"/>
+    <label id="LISTENING" for="LISTENING">Dinliyor</label>
+    <input type="radio" name="setActivity" id="WATCHING"/>
+    <label id="WATCHING" for="WATCHING">İzliyor</label>
+    <input type="radio" name="setActivity" id="COMPETING"/>
+    <label id="COMPETING" for="COMPETING">Yarışıyor</label>
+    <input type="radio" name="setActivity" id="STREAMING"/>
+    <label id="STREAMING" for="STREAMING">Canlı</label>
+    <input type="radio" name="setActivity" id="PLAYING"/>
+    <label id="PLAYING" for="PLAYING">Oynuyor</label>
+</div>
 
-		
-    </div>
-	
-    <script>
-        var setActivityValue = "${config.setActivity}"; // Bu değeri config dosyanızdan alınan bir değerle değiştirin
+<script>
+    // Gelen veriyi burada tanımlayın (Örneğin: Dinliyor, İzliyor, Yarışıyor, Canlı, Oynuyor)
+    var receivedActivity = "${config.setActivity}";
 
-        // Radio butonları kontrol et ve uygun olanı seç
-        var radioButtons = document.getElementsByName("payment");
+    // Radio butonlarına erişim
+    var radioButtons = document.getElementsByName("setActivity");
 
-        for (var i = 0; i < radioButtons.length; i++) {
-            if (radioButtons[i].id === setActivityValue) {
-                radioButtons[i].checked = true;
-                break;
-            }
+    // Her bir radio butonunu kontrol et
+    for (var i = 0; i < radioButtons.length; i++) {
+        // Eğer radio butonunun id'si, gelen veriye eşitse
+        if (radioButtons[i].id === receivedActivity) {
+            // Radio butonunu seçili hale getir
+            radioButtons[i].checked = true;
+
+            // İlgili label elementinin yanına "check" ibaresi ekle
+            var labelElement = document.querySelector('input[name="' + receivedActivity + '"]');
+            labelElement.innerHTML += " checked";
+			alert(labelElement);
         }
-    </script>
-<br><br>
+    }
+</script>
+<br>
+        <label for="twitch">Twitch:</label>
+        <input type="text" id="twitch" name="twitch" value="${config.twitch}"><br>
+		
         <label for="genCooldown">Genel Bekleme Süresi: (Saniye)</label>
-        <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br><br>
+        <input type="text" id="genCooldown" name="genCooldown" value="${config.genCooldown}"><br>
 
         <label for="premiumCooldown">Premium Bekleme Süresi: (Saniye)</label>
-        <input type="text" id="premiumCooldown" name="premiumCooldown" value="${config.premiumCooldown}"><br><br>
+        <input type="text" id="premiumCooldown" name="premiumCooldown" value="${config.premiumCooldown}"><br>
 
         <label for="website">Web Site:</label>
-        <input type="text" id="website" name="website" value="${config.website}"><br><br>
+        <input type="text" id="website" name="website" value="${config.website}"><br>
 
+        <label for="discord">Discord:</label>
+        <input type="text" id="discord" name="discord" value="${config.discord}"><br>
+		
         <label for="banner">Afiş:</label>
-        <input type="text" id="banner" name="banner" value="${config.banner}"><br><br>
+        <input type="text" id="banner" name="banner" value="${config.banner}"><br>
 
         <label for="footer">Alt Bilgi:</label>
-        <input type="text" id="footer" name="footer" value="${config.footer}"><br><br>
-
+        <input type="text" id="footer" name="footer" value="${config.footer}"><br>
+		
+        <label for="genChannel">Ücretsiz Kanal:</label>
+        <input type="text" id="genChannel" name="genChannel" value="${config.genChannel}"><br>
+		
+        <label for="premiumChannel">Premium Kanal:</label>
+        <input type="text" id="premiumChannel" name="premiumChannel" value="${config.premiumChannel}"><br>
+		
+        <label for="nfswChannel">Nfsw Kanal:</label>
+        <input type="text" id="nfswChannel" name="nfswChannel" value="${config.nfswChannel}"><br>
         <input type="submit" value="Kaydet">
     </form>
 
@@ -2325,34 +2341,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     <script>
+function sayfayiYenidenYukle() {
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+}
+// Handle form submission
+const dosyaFormx = document.getElementById("settings-form");
 
-    // Handle form submission
-const dosyaForm = document.getElementById("settings-form");
+dosyaFormx.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-dosyaForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+    const formData = new FormData(dosyaFormx);
+    const formDataObject = {};
 
-  const formData = new FormData(dosyaForm);
-  const formDataObject = {};
+    formData.forEach((value, key) => {
+        formDataObject[key] = value;
+    });
 
-  formData.forEach((value, key) => {
-    formDataObject[key] = value;
-  });
+    // Get the selected setActivity value
+    const selectedActivity = document.querySelector('input[name="setActivity"]:checked').id;
+    
+    // Update the formDataObject with the selected setActivity value
+    formDataObject['setActivity'] = selectedActivity;
 
-  // Send the form data to the server for saving
-  const response = await fetch("/save-settings", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formDataObject),
-  });
+    // Send the form data to the server for saving
+    const response = await fetch("/save-settings", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataObject),
+    });
 
-  if (response.ok) {
-    toastr.success("Başarılı", "Ayarlar Kaydedildi");
-  } else {
-    toastr.warning("Hata", "Ayarlar Kaydedilemedi");
-  }
+    if (response.ok) {
+        toastr.success("Başarılı", "Ayarlar Kaydedildi");
+		sayfayiYenidenYukle();
+    } else {
+        toastr.warning("Hata", "Ayarlar Kaydedilemedi");
+    }
 });
 
 
@@ -2396,6 +2423,7 @@ app.use(bodyParser.json());
 // Route to save settings
 app.post("/save-settings", requireLogin, (req, res) => {
   const settings = req.body;
+//console.log(settings);
 
   // Read the current contents of config.json
   fs.readFile('./config.json', 'utf8', (err, data) => {
@@ -2425,8 +2453,11 @@ app.post("/save-settings", requireLogin, (req, res) => {
       res.json({
         message: "Ayarlar Kaydedildi."
       });
+	  process.exit(1);
+	  // console.log(config);
     });
   });
+   
 });
 
 

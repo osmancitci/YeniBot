@@ -10,7 +10,7 @@ const log = new CatLoggr();
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ekle')
-		.setDescription('Bir hizmete hesap ekleyin.')
+		.setDescription('Bir Hizmete Hesap Ekleyin.')
 		.addStringOption(option =>
 			option.setName('type')
 				.setDescription('Hizmet türü (ücretsiz veya premium)')
@@ -38,7 +38,7 @@ module.exports = {
 				.setColor(config.color.red)
 				.setTitle('İzniniz Yok!')
 				.setDescription('🛑 Sadece Yönetici Yapabilir HEHE')
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 		}
@@ -48,7 +48,7 @@ module.exports = {
 				.setColor(config.color.red)
 				.setTitle('Eksik parametreler veya geçersiz tür!')
 				.setDescription('Bir hizmet, bir hesap ve geçerli bir tür (ücretsiz veya premium) belirtmeniz gerekiyor!')
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [missingParamsEmbed], ephemeral: true });
 		}
@@ -70,7 +70,7 @@ module.exports = {
 				.setColor(config.color.green)
 				.setTitle('Hesap Eklendi!')
 				.setDescription(`\`${account}\` hesabı \`${service}\` hizmetine **${type}** başarıyla eklendi.`)
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL())
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 
 			interaction.reply({ embeds: [successEmbed], ephemeral: true });

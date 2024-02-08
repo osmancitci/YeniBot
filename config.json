@@ -6,15 +6,19 @@
   "clientId": "",
   "guildId": "",
   "globalDeploy": true,
-  "status": "neysene",
-  "website": "https://osmancitci",
-  "banner": "https://media.discordapp.net/attachments/1200381157745893426/1201444181697118269/standard_8.gif?ex=65c9d716&is=65b76216&hm=612bf01fd8e85723e08fbd972f25538b719ba12e7866bb8aeecc5bd028fb4b37&=&width=585&height=75",
-  "footer": "Kalk",
-  "genChannel": "1202742251873239040",
-  "premiumChannel": "1202742371662565396",
+  "status": "Kalkan Bot",
+  "website": "https://website.com",
+  "banner": "https://media.discordapp.net/attachments/960440723369517106/996423763522506782/rainbow-border.gif",
+  "discord": "https://discord.com/",
+  "twitch": "https://twitch.tv/stream",
+  "footer": "Alt Bilgi",
+  "genChannel": "",
+  "premiumChannel": "",
+  "nfswChannel": "",
   "genCooldown": "500",
-  "premiumCooldown": "3",
-  "setActivity": "STREAMING",
+  "premiumCooldown": "100",
+  "setActivity": "COMPETING",
+  "dil": "tr_TR",
   "color": {
     "green": "0x57F287",
     "yellow": "0xFEE75C",
@@ -24,6 +28,5 @@
   "command": {
     "notfound_message": true,
     "error_message": true
-  },
-  "payment": "on"
+  }
 }

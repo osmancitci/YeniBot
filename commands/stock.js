@@ -6,11 +6,11 @@ const config = require('../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stok')
-		.setDescription('Hizmet stokunu görüntüleyin. Maded by @sanalmuz'),
+		.setDescription('Hizmet Stoklarını Görüntüleyin.'),
 
 	async execute(interaction) {
-		const freeStock = await getStock(`${__dirname}/../bedava/`);
-		const premiumStock = await getStock(`${__dirname}/../ozel/`);
+		const freeStock = await getStock(`${__dirname}/../free/`);
+		const premiumStock = await getStock(`${__dirname}/../premium/`);
 
 		const embed = new MessageEmbed()
 			.setColor(config.color.default)
@@ -21,15 +21,15 @@ module.exports = {
 
 		if (freeStock.length > 0) {
 			const freeStockInfo = await getServiceInfo(`${__dirname}/../free/`, freeStock);
-			embed.addField('Bedava Servisler;', freeStockInfo, true);
+			embed.addFields({ name: 'Bedava Servisler;', value: freeStockInfo, inline: true });
 		}
 
 		if (premiumStock.length > 0) {
 			const premiumStockInfo = await getServiceInfo(`${__dirname}/../premium/`, premiumStock);
-			embed.addField('Özel Servisler;', premiumStockInfo, true);
+			embed.addFields({ name: 'Özel Servisler;', value: premiumStockInfo, inline: true });
 		}
 
-		embed.addField('Faydalı Bağlantılar', `[**Web Sitesi**](${config.website}) [**Discord**](https://discord.gg/gqDnqmCGrx)`);
+		  embed.addFields({ name: 'Faydalı Bağlantılar', value: `[**Web Sitesi**](${config.website}) [**Discord**](${config.discord})` });
 
 		interaction.reply({ embeds: [embed] });
 	},

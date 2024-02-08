@@ -1,1 +1,1 @@
-BU BOT BENİM DEĞİLDİR!
+Kalkan Bot

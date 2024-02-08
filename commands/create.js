@@ -9,7 +9,7 @@ const log = new CatLoggr();
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('olustur')
-		.setDescription('Yeni bir hizmet oluşturun.')
+		.setDescription('Yeni Bir Hizmet Oluşturun.')
 		.addStringOption(option =>
 			option.setName('service')
 				.setDescription('Oluşturulacak hizmetin adı')
@@ -33,7 +33,7 @@ module.exports = {
 				.setColor(config.color.red)
 				.setTitle('İzniniz Yok!')
 				.setDescription('🛑 Sadece Yönetici Yapabilir HEHE')
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 		}
@@ -43,7 +43,7 @@ module.exports = {
 				.setColor(config.color.red)
 				.setTitle('Parametreler eksik!')
 				.setDescription('Bir hizmet adı belirtmeniz gerekiyor!')
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [missingParamsEmbed], ephemeral: true });
 		}
@@ -58,7 +58,7 @@ module.exports = {
 				.setColor(config.color.red)
 				.setTitle('Geçersiz hizmet türü!')
 				.setDescription('Hizmet türü "ücretsiz" veya "premium" olmalıdır.')
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 64 }))
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [invalidTypeEmbed], ephemeral: true });
 		}
@@ -69,7 +69,7 @@ module.exports = {
 				.setColor(config.color.green)
 				.setTitle('Hizmet oluşturuldu!')
 				.setDescription(`Yeni hizmet **${type}** \`${service}\` hizmeti oluşturuldu!`)
-				.setFooter(interaction.user.tag, interaction.user.displayAvatarURL())
+				.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
 				.setTimestamp();
 
 			interaction.reply({ embeds: [successEmbed], ephemeral: true });

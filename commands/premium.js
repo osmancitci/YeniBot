@@ -7,21 +7,41 @@ const CatLoggr = require("cat-loggr");
 const log = new CatLoggr();
 const generated = new Set();
 
+const generateChoices = () => {
+    const files = fs.readdirSync('./premium');
+    const choices = [];
+    for (const file of files) {
+        const name = file.replace('.txt', '');
+        const value = name;
+        choices.push({ name, value });
+    }
+    return choices;
+};
+
+
+//console.log(generateChoices());
 module.exports = {
+
   data: new SlashCommandBuilder()
     .setName("ozel")
-    .setDescription("Stok varsa belirli bir hizmet oluşturun")
-    .addStringOption((option) =>
-      option
-        .setName("service")
-        .setDescription("Oluşturulacak hizmetin adı")
-        .setRequired(true)
-    ),
+.setDescription('Premium Hesap Alın.')
+       .addStringOption(option =>
+         option.setName('service')
+                .setDescription('Hesapları göster')
+              .setRequired(true)
+                        .addChoices(...generateChoices())
+             // .addChoices(...generateChoices())
+                       //.addChoices({name: "Elliot Miller", value: "123456789"})
 
+                       
+                       ), 
+
+                       
+  
   async execute(interaction) {
+
     const service = interaction.options.getString("service");
     const member = interaction.member;
-
     // Check if the channel where the command was used is the generator channel
     if (interaction.channelId !== config.premiumChannel) {
       const wrongChannelEmbed = new MessageEmbed()
@@ -30,10 +50,7 @@ module.exports = {
         .setDescription(
           `Bu kanalda \`/ozel\` komutunu kullanamazsınız! <#${config.premiumChannel}>'da deneyin!`
         )
-        .setFooter(
-          interaction.user.tag,
-          interaction.user.displayAvatarURL({ dynamic: true, size: 64 })
-        )
+        .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
         .setTimestamp();
 
       return interaction.reply({
@@ -50,10 +67,7 @@ module.exports = {
         .setDescription(
           `Bu komutu tekrar çalıştırmadan önce lütfen **${config.premiumCooldown}** saniye bekleyin!`
         )
-        .setFooter(
-          interaction.user.tag,
-          interaction.user.displayAvatarURL({ dynamic: true, size: 64 })
-        )
+        .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
         .setTimestamp();
 
       return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
@@ -69,10 +83,7 @@ module.exports = {
           .setColor(config.color.red)
           .setTitle("Jeneratör Hatası!")
           .setDescription(`\`${service}\` hizmeti mevcut değil!`)
-          .setFooter(
-            interaction.user.tag,
-            interaction.user.displayAvatarURL({ dynamic: true, size: 64 })
-          )
+          .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
           .setTimestamp();
 
         return interaction.reply({ embeds: [notFoundEmbed], ephemeral: true });
@@ -85,10 +96,7 @@ module.exports = {
           .setColor(config.color.red)
           .setTitle("Jeneratör Hatası!")
           .setDescription(`\`${service}\` hizmeti boş!`)
-          .setFooter(
-            interaction.user.tag,
-            interaction.user.displayAvatarURL({ dynamic: true, size: 64 })
-          )
+          .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
           .setTimestamp();
 
         return interaction.reply({
@@ -113,21 +121,12 @@ module.exports = {
         const embedMessage = new MessageEmbed()
           .setColor(config.color.green)
           .setTitle("Özel hesap oluşturuldu")
-          .setFooter(
-            interaction.user.tag,
-            interaction.user.displayAvatarURL({ dynamic: true, size: 64 })
-          )
+          .setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 64 }) })
           .setDescription(
             "🙏 Özel üye olduğunuz için çok teşekkür ederiz! \n 🌟 Desteğiniz bizim için dünyalara bedel! 💖😊"
           )
-          .addField(
-            "Servis",
-            `\`\`\`${service[0].toUpperCase()}${service
-              .slice(1)
-              .toLowerCase()}\`\`\``,
-            true
-          )
-          .addField("Hesap", `\`\`\`${generatedAccount}\`\`\``, true)
+          .addFields({ name: 'Servis', value: `\`\`\`${service[0].toUpperCase()}${service.slice(1).toLowerCase()}\`\`\``, inline: true })
+					.addFields({ name: 'Hesap', value: `\`\`\`${generatedAccount}\`\`\``, inline: true })
           .setImage(config.banner)
           .setTimestamp();
 
@@ -150,3 +149,25 @@ module.exports = {
     });
   },
 };
+
+async function getStock(directory) {
+	try {
+		const files = await fs.readdir(directory);
+
+		const stock = files.filter(file => file.endsWith('.txt'));
+		return stock;
+	} catch (err) {
+		console.error('Dizin taranamıyor: ' + err);
+		return [];
+	}
+}
+
+async function getServiceInfo(directory, stock) {
+	const info = [];
+	for (const service of stock) {
+		const serviceContent = await fs.readFile(`${directory}/${service}`, 'utf-8');
+		const lines = serviceContent.split(/\r?\n/);
+		info.push(`**${service.replace('.txt', '')}:** \`${lines.length}\``);
+	}
+	return info.join('\n');
+}

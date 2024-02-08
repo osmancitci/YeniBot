@@ -1,0 +1,15 @@
+{
+  "install": {
+    "include": []
+  },
+  "restart": {
+    "exclude": [],
+    "include": [
+      "\\.js$",
+      "\\.coffee$",
+      "\\.json",
+      "\\.py"
+    ]
+  },
+  "throttle": 100
+}
